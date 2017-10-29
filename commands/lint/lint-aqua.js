@@ -25,7 +25,7 @@ module.exports = class LintAquaCommand extends Command {
 		});
 	}
 
-	run(msg, { code }) {
+	async run(msg, { code }) {
 		if (code.test(codeblock)) code = code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
