@@ -36,6 +36,7 @@
 		"erlpack": "github:discordapp/erlpack",
 		"eslint": "^4.10.0",
 		"eslint-config-aqua": "^2.0.1",
+		"js-beautify": "^1.7.4",
 		"uws": "^8.14.1",
 		"zlib-sync": "^0.1.3"
 	},
