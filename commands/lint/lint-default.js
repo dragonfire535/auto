@@ -29,7 +29,10 @@ module.exports = class LintDefaultCommand extends Command {
 
 	async run(msg, { code }, pattern) {
 		console.log(code);
-		if (!codeblock.test(code) && !pattern) return msg.reply('Invalid message!');
+		if (!codeblock.test(code)) {
+			if (pattern) return null;
+			return msg.reply('Invalid message!');
+		}
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
 			await msg.react('✅');
