@@ -19,14 +19,15 @@ module.exports = class LintAquaCommand extends Command {
 				{
 					key: 'code',
 					prompt: 'What code do you want to lint?',
-					type: 'string'
+					type: 'string',
+					parse: code => code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim()
 				}
 			]
 		});
 	}
 
 	async run(msg, { code }) {
-		if (codeblock.test(code)) code = code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+		if (!codeblock.test(code)) return msg.reply('Invalid message!');
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
 			await msg.react('✅');

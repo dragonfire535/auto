@@ -20,24 +20,24 @@ module.exports = class LintDefaultCommand extends Command {
 				{
 					key: 'code',
 					prompt: 'What code do you want to lint?',
-					type: 'string'
+					type: 'string',
+					parse: code => code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim()
 				}
 			]
 		});
 	}
 
 	async run(msg, { code }, pattern) {
-		if (pattern) code = msg.content;
-		if (codeblock.test(code)) code = code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
 		console.log(code);
+		if (!codeblock.test(code) && !pattern) return msg.reply('Invalid message!');
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
 			await msg.react('✅');
-			if (pattern && !code) return null;
+			if (pattern) return null;
 			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		} else {
 			await msg.react('❌');
-			if (pattern && !code) return null;
+			if (pattern) return null;
 			return msg.reply(stripIndents`
 				${badMessages[Math.floor(Math.random() * badMessages.length)]}
 				${errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``).join('\n')}
