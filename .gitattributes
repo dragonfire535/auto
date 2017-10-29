@@ -1,0 +1,9 @@
+# Text Files
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+
+# Configs and Stuff
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.npmrc text eol=lf
