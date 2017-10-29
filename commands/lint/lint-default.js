@@ -29,14 +29,15 @@ module.exports = class LintDefaultCommand extends Command {
 	async run(msg, { code }, pattern) {
 		if (pattern) code = msg.content;
 		if (codeblock.test(code)) code = code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+		console.log(code);
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
 			await msg.react('✅');
-			if (pattern) return null;
+			if (pattern && !code) return null;
 			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		} else {
 			await msg.react('❌');
-			if (pattern) return null;
+			if (pattern && !code) return null;
 			return msg.reply(stripIndents`
 				${badMessages[Math.floor(Math.random() * badMessages.length)]}
 				${errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``).join('\n')}
