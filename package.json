@@ -34,11 +34,11 @@
 		"discord.js": "github:hydrabolt/discord.js",
 		"erlpack": "github:discordapp/erlpack",
 		"eslint": "^4.10.0",
+		"eslint-config-aqua": "^2.0.1",
 		"uws": "^8.14.1",
 		"zlib-sync": "^0.1.3"
 	},
 	"devDependencies": {
-		"eslint-config-aqua": "^2.0.1",
 		"eslint-plugin-json": "^1.2.0"
 	},
 	"eslintConfig": {
