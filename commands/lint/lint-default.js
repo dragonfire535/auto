@@ -30,7 +30,7 @@ module.exports = class LintDefaultCommand extends Command {
 	}
 
 	async run(msg, { code }, pattern) {
-		if (!codeblock.test(code)) {
+		if (!code) {
 			if (pattern) return null;
 			return msg.reply('Invalid message!');
 		}

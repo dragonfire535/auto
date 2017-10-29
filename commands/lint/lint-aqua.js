@@ -30,7 +30,7 @@ module.exports = class LintAquaCommand extends Command {
 	}
 
 	async run(msg, { code }) {
-		if (!codeblock.test(code)) return msg.reply('Invalid message!');
+		if (!code) return msg.reply('Invalid message!');
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
 			await msg.react('✅');
