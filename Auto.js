@@ -25,6 +25,12 @@ client.registry
 	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
+client.on('unknownCommand', msg => {
+	const matches = msg.content.match(/```(js|javascript)?\n(.+)\n```/gi);
+	if (!matches) return;
+	client.registry.resolveCommand('lint:lint-default').run(msg, { code: matches[1] }, true);
+});
+
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
 	client.user.setActivity(`@${client.user.tag} lint to scan!`);

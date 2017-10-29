@@ -14,7 +14,6 @@ module.exports = class LintDefaultCommand extends Command {
 			group: 'lint',
 			memberName: 'lint-default',
 			description: 'Lints code with the recommended rules.',
-			patterns: [codeblock],
 			clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 			args: [
 				{
@@ -31,7 +30,6 @@ module.exports = class LintDefaultCommand extends Command {
 	}
 
 	async run(msg, { code }, pattern) {
-		console.log(code);
 		if (!codeblock.test(code)) {
 			if (pattern) return null;
 			return msg.reply('Invalid message!');
