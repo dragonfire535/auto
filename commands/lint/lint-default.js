@@ -22,7 +22,7 @@ module.exports = class LintDefaultCommand extends Command {
 					type: 'string',
 					parse: code => {
 						if (!codeblock.test(code)) return null;
-						return code.match(codeblock)[1];
+						return codeblock.exec(code)[1];
 					}
 				}
 			]

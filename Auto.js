@@ -26,7 +26,7 @@ client.registry
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.on('unknownCommand', msg => {
-	const matches = msg.content.match(/```(js|javascript)?\n(.+)\n```/gi);
+	const matches = /```(js|javascript)?\n(.+)\n```/gi.exec(msg.content);
 	if (!matches) return;
 	client.registry.resolveCommand('lint:lint-default').run(msg, { code: matches[1] }, true);
 });
