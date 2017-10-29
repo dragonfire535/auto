@@ -2,6 +2,7 @@ const { Command } = require('discord.js-commando');
 const { linter } = require('eslint');
 const { stripIndents } = require('common-tags');
 const eslintConfig = require('eslint-config-aqua');
+eslintConfig['eol-last'] = 'off';
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
 const codeblock = /```(.|\s)+```/gi;
