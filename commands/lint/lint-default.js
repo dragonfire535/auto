@@ -4,7 +4,7 @@ const { stripIndents } = require('common-tags');
 const eslintConfig = require('../../assets/json/eslint-default');
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
-const codeblock = /```(.|\s)+```/gi;
+const codeblock = /```(js|javascript)?\n(.+)\n```/gi;
 
 module.exports = class LintDefaultCommand extends Command {
 	constructor(client) {
@@ -23,7 +23,7 @@ module.exports = class LintDefaultCommand extends Command {
 					type: 'string',
 					parse: code => {
 						if (!codeblock.test(code)) return null;
-						return code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+						return code.match(codeblock)[1];
 					}
 				}
 			]
