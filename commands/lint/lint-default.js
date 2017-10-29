@@ -27,7 +27,8 @@ module.exports = class LintDefaultCommand extends Command {
 	}
 
 	async run(msg, { code }, pattern) {
-		if (pattern || code.test(codeblock)) code = code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+		if (pattern) code = msg.content;
+		if (codeblock.test(code)) code = code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
 			await msg.react('✅');
