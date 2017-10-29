@@ -20,7 +20,10 @@ module.exports = class LintAquaCommand extends Command {
 					key: 'code',
 					prompt: 'What code do you want to lint?',
 					type: 'string',
-					parse: code => code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim()
+					parse: code => {
+						if (!codeblock.test(code)) return null;
+						return code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+					}
 				}
 			]
 		});
