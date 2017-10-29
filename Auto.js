@@ -25,10 +25,12 @@ client.registry
 	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
+const codeblock = /```(.|\s)+```/gi;
 client.on('unknownCommand', msg => {
-	const matches = /```(js|javascript)?\n(.+)\n```/gi.exec(msg.content);
-	if (!matches) return;
-	client.registry.resolveCommand('lint:lint-default').run(msg, { code: matches[1] }, true);
+	const valid = codeblock.test(msg.content);
+	if (!valid) return;
+	const code = msg.content.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+	client.registry.resolveCommand('lint:lint-default').run(msg, { code }, true);
 });
 
 client.on('ready', () => {

@@ -4,7 +4,7 @@ const { stripIndents } = require('common-tags');
 const eslintConfig = require('eslint-config-aqua');
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
-const codeblock = /```(js|javascript)?\n(.+)\n```/gi;
+const codeblock = /```(.|\s)+```/gi;
 
 module.exports = class LintAquaCommand extends Command {
 	constructor(client) {
@@ -22,7 +22,7 @@ module.exports = class LintAquaCommand extends Command {
 					type: 'string',
 					parse: code => {
 						if (!codeblock.test(code)) return null;
-						return codeblock.exec(code)[1];
+						return code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
 					}
 				}
 			]
