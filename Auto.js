@@ -29,6 +29,7 @@ client.registry
 const codeblock = /```(.|\s)+```/gi;
 client.on('message', msg => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
+	if (!msg.channel.topic || msg.channel.topic.includes('<blocked>')) return;
 	const valid = codeblock.test(msg.content);
 	if (!valid) return;
 	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
@@ -49,6 +50,12 @@ client.on('disconnect', event => {
 client.on('error', err => console.error('[ERROR]', err));
 
 client.on('warn', err => console.warn('[WARNING]', err));
+
+client.dispatcher.addInhibitor(msg => {
+	if (msg.channel.type !== 'text' || !msg.channel.topic) return false;
+	if (msg.channel.topic.includes('<blocked>')) return 'topic blocked';
+	return false;
+});
 
 client.login(AUTO_TOKEN);
 
