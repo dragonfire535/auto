@@ -18,7 +18,8 @@
 		"discord",
 		"discord-api",
 		"discord-bot",
-		"discord-js"
+		"discord-js",
+		"discord-js-commando"
 	],
 	"author": "dragonfire535 <danielbodendahl@gmail.com>",
 	"license": "GPL-3.0",
