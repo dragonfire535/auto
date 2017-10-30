@@ -3,6 +3,7 @@ const { linter } = require('eslint');
 const { stripIndents } = require('common-tags');
 const eslintConfig = require('eslint-config-aqua');
 eslintConfig.rules['eol-last'] = 'off';
+eslintConfig.rules.indent = ['error', 4];
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
 
