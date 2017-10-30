@@ -44,7 +44,7 @@ module.exports = class LintDefaultCommand extends Command {
 		}
 		let errorMap = errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``);
 		if (errorMap.length > 10) {
-			const len = errorMap.length;
+			const len = errorMap.length - 10;
 			errorMap = errorMap.slice(0, 10);
 			errorMap.push(`...${len} more.`);
 		}
