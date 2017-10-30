@@ -1,6 +1,5 @@
 const { Command } = require('discord.js-commando');
 const { js_beautify: beautify } = require('js-beautify');
-const codeblock = /```(.|\s)+```/gi;
 
 module.exports = class BeautifyCommand extends Command {
 	constructor(client) {
@@ -13,11 +12,7 @@ module.exports = class BeautifyCommand extends Command {
 				{
 					key: 'code',
 					prompt: 'What code do you want to beautify?',
-					type: 'string',
-					parse: code => {
-						if (!codeblock.test(code)) return null;
-						return code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
-					}
+					type: 'code'
 				}
 			]
 		});

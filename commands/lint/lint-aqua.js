@@ -5,7 +5,6 @@ const eslintConfig = require('eslint-config-aqua');
 eslintConfig.rules['eol-last'] = 'off';
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
-const codeblock = /```(.|\s)+```/gi;
 
 module.exports = class LintAquaCommand extends Command {
 	constructor(client) {
@@ -20,11 +19,7 @@ module.exports = class LintAquaCommand extends Command {
 				{
 					key: 'code',
 					prompt: 'What code do you want to lint?',
-					type: 'string',
-					parse: code => {
-						if (!codeblock.test(code)) return null;
-						return code.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
-					}
+					type: 'code'
 				}
 			]
 		});

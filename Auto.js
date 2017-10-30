@@ -12,6 +12,7 @@ const client = new CommandoClient({
 
 client.registry
 	.registerDefaultTypes()
+	.registerTypesIn(path.join(__dirname, 'types'))
 	.registerGroups([
 		['util', 'Utility'],
 		['lint', 'Lint'],
