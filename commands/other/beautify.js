@@ -20,6 +20,6 @@ module.exports = class BeautifyCommand extends Command {
 
 	run(msg, { code }) {
 		if (!code) return msg.reply('Invalid message!');
-		return msg.code('js', beautify(code, { indent_with_tabs: true }));
+		return msg.code('js', beautify(code));
 	}
 };
