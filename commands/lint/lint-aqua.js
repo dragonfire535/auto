@@ -6,6 +6,7 @@ eslintConfig.rules['eol-last'] = 'off';
 eslintConfig.rules.indent = ['error', 4];
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
+const emoji = require('../../assets/json/emoji');
 
 module.exports = class LintAquaCommand extends Command {
 	constructor(client) {
@@ -29,10 +30,18 @@ module.exports = class LintAquaCommand extends Command {
 	run(msg, { code }) {
 		if (!code) return msg.reply('Invalid message!');
 		const errors = linter.verify(code, eslintConfig);
-		if (!errors.length) return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
+		if (!errors.length) {
+			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
+		}
+		let errorMap = errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``);
+		if (errorMap.length > 10) {
+			const len = errorMap.length - 10;
+			errorMap = errorMap.slice(0, 10);
+			errorMap.push(`...${len} more.`);
+		}
 		return msg.reply(stripIndents`
-			${badMessages[Math.floor(Math.random() * badMessages.length)]}
-			${errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``).join('\n')}
+			${emoji.failure.string} ${badMessages[Math.floor(Math.random() * badMessages.length)]}
+			${errorMap.join('\n')}
 		`);
 	}
 };
