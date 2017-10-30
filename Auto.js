@@ -27,9 +27,11 @@ client.registry
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
 const codeblock = /```(.|\s)+```/gi;
-client.on('unknownCommand', msg => {
+client.on('message', msg => {
+	if (msg.channel.type !== 'text' || msg.author.bot) return;
 	const valid = codeblock.test(msg.content);
 	if (!valid) return;
+	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
 	const code = msg.content.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
 	client.registry.resolveCommand('lint:lint-default').run(msg, { code }, true);
 });

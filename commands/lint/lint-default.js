@@ -13,7 +13,7 @@ module.exports = class LintDefaultCommand extends Command {
 			group: 'lint',
 			memberName: 'lint-default',
 			description: 'Lints code with the recommended rules.',
-			clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
+			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{
 					key: 'code',
@@ -31,12 +31,16 @@ module.exports = class LintDefaultCommand extends Command {
 		}
 		const errors = linter.verify(code, eslintConfig);
 		if (!errors.length) {
-			await msg.react('✅');
-			if (pattern) return null;
+			if (pattern) {
+				await msg.react('✅');
+				return null;
+			}
 			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		} else {
-			await msg.react('❌');
-			if (pattern) return null;
+			if (pattern) {
+				await msg.react('❌');
+				return null;
+			}
 			return msg.reply(stripIndents`
 				${badMessages[Math.floor(Math.random() * badMessages.length)]}
 				${errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``).join('\n')}

@@ -14,7 +14,7 @@ module.exports = class LintAquaCommand extends Command {
 			group: 'lint',
 			memberName: 'lint-aqua',
 			description: 'Lints code with eslint-config-aqua rules.',
-			clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
+			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{
 					key: 'code',
@@ -28,15 +28,10 @@ module.exports = class LintAquaCommand extends Command {
 	async run(msg, { code }) {
 		if (!code) return msg.reply('Invalid message!');
 		const errors = linter.verify(code, eslintConfig);
-		if (!errors.length) {
-			await msg.react('✅');
-			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
-		} else {
-			await msg.react('❌');
-			return msg.reply(stripIndents`
-				${badMessages[Math.floor(Math.random() * badMessages.length)]}
-				${errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``).join('\n')}
-			`);
-		}
+		if (!errors.length) return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
+		return msg.reply(stripIndents`
+			${badMessages[Math.floor(Math.random() * badMessages.length)]}
+			${errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``).join('\n')}
+		`);
 	}
 };

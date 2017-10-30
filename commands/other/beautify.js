@@ -8,6 +8,7 @@ module.exports = class BeautifyCommand extends Command {
 			group: 'other',
 			memberName: 'beautify',
 			description: 'Beautifies code with js-beautify.',
+			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{
 					key: 'code',
