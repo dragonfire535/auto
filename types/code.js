@@ -20,10 +20,10 @@ class CodeArgumentType extends ArgumentType {
 			}
 		}
 		if (codeblock.test(value)) {
-			const match = value.match(codeblock);
+			const parsed = codeblock.exec(value);
 			return {
-				code: match[3].trim(),
-				lang: match[2]
+				code: parsed[3].trim(),
+				lang: parsed[2]
 			};
 		}
 		return null;
