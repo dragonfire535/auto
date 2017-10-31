@@ -10,6 +10,7 @@ const client = new CommandoClient({
 	disabledEvents: ['TYPING_START']
 });
 const emoji = require('./assets/json/emoji');
+const codeblock = /(`{3})(js|javascript)?\n([\s\S]*)\1/gi;
 
 client.registry
 	.registerDefaultTypes()
@@ -27,14 +28,17 @@ client.registry
 	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
-const codeblock = /(`{3})(js|javascript)?\n([\s\S]*)\1/gi;
 client.on('message', msg => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
 	if (msg.channel.topic && msg.channel.topic.includes('<blocked>')) return;
 	const valid = codeblock.test(msg.content);
 	if (!valid) return;
 	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
-	const code = msg.content.match(codeblock)[0].replace(/(`{3})(js|javascript)?/gi, '').trim();
+	const match = msg.content.match(codeblock);
+	const code = {
+		code: match[3].trim(),
+		lang: match[2]
+	};
 	client.registry.resolveCommand('lint:lint-default').run(msg, { code }, true);
 });
 
@@ -46,7 +50,11 @@ client.on('messageReactionAdd', (reaction, user) => {
 	if (!msg.reactions.get(emoji.failure.id).users.has(client.user.id)) return;
 	const valid = codeblock.test(msg.content);
 	if (!valid) return;
-	const code = msg.content.match(codeblock)[0].replace(/(`{3})(js|javascript)?/gi, '').trim();
+	const match = msg.content.match(codeblock);
+	const code = {
+		code: match[3].trim(),
+		lang: match[2]
+	};
 	client.registry.resolveCommand('lint:lint-default').run(msg, { code });
 });
 

@@ -19,7 +19,13 @@ class CodeArgumentType extends ArgumentType {
 				return null;
 			}
 		}
-		if (codeblock.test(value)) return value.match(codeblock)[0].replace(/(`{3})(js|javascript)?/gi, '').trim();
+		if (codeblock.test(value)) {
+			const match = value.match(codeblock);
+			return {
+				code: match[3].trim(),
+				lang: match[2]
+			};
+		}
 		return null;
 	}
 }

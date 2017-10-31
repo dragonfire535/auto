@@ -30,7 +30,7 @@ module.exports = class LintDefaultCommand extends Command {
 			if (pattern) return null;
 			return msg.reply('Invalid message!');
 		}
-		const errors = linter.verify(code, eslintConfig);
+		const errors = linter.verify(code.code, eslintConfig);
 		if (!errors.length) {
 			if (pattern) {
 				await msg.react(emoji.success.id);

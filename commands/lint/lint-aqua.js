@@ -29,7 +29,7 @@ module.exports = class LintAquaCommand extends Command {
 
 	run(msg, { code }) {
 		if (!code) return msg.reply('Invalid message!');
-		const errors = linter.verify(code, eslintConfig);
+		const errors = linter.verify(code.code, eslintConfig);
 		if (!errors.length) {
 			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
 		}
