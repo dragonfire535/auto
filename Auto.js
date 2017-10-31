@@ -27,7 +27,7 @@ client.registry
 	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
-const codeblock = /```(.|\s)+```/gi;
+const codeblock = /```js\n(.|\s)+```/gi;
 client.on('message', msg => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
 	if (msg.channel.topic && msg.channel.topic.includes('<blocked>')) return;
