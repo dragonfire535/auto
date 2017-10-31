@@ -39,7 +39,7 @@ client.on('message', msg => {
 		code: parsed[3].trim(),
 		lang: parsed[2]
 	};
-	client.registry.resolveCommand('lint:lint-default').run(msg, { code }, true);
+	client.registry.resolveCommand('lint:default').run(msg, { code }, true);
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
@@ -55,7 +55,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 		code: parsed[3].trim(),
 		lang: parsed[2]
 	};
-	client.registry.resolveCommand('lint:lint-default').run(msg, { code });
+	client.registry.resolveCommand('lint:default').run(msg, { code });
 });
 
 client.on('ready', () => {
