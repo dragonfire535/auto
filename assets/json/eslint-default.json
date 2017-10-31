@@ -1,7 +1,8 @@
 {
 	"extends": "eslint:recommended",
 	"parserOptions": {
-		"emcaVersion": 2017
+		"emcaVersion": 2017,
+		"sourceType": "module"
 	},
 	"env": {
 		"es6": true,
