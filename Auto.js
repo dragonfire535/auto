@@ -31,8 +31,7 @@ client.registry
 client.on('message', msg => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
 	if (msg.channel.topic && msg.channel.topic.includes('<blocked>')) return;
-	const valid = codeblock.test(msg.content);
-	if (!valid) return;
+	if (!codeblock.test(msg.content)) return;
 	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
 	const parsed = codeblock.exec(msg.content);
 	const code = {
@@ -48,8 +47,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 	if (reaction.emoji.id !== emoji.failure.id) return;
 	if (!msg.reactions.has(emoji.failure.id)) return;
 	if (!msg.reactions.get(emoji.failure.id).users.has(client.user.id)) return;
-	const valid = codeblock.test(msg.content);
-	if (!valid) return;
+	if (!codeblock.test(msg.content)) return;
 	const parsed = codeblock.exec(msg.content);
 	const code = {
 		code: parsed[3].trim(),
