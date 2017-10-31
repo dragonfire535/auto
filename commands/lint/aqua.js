@@ -14,7 +14,7 @@ module.exports = class LintAquaCommand extends Command {
 			name: 'lint-aqua',
 			aliases: ['lint-config-aqua'],
 			group: 'lint',
-			memberName: 'lint-aqua',
+			memberName: 'aqua',
 			description: 'Lints code with eslint-config-aqua rules.',
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
