@@ -1,5 +1,5 @@
 const { ArgumentType } = require('discord.js-commando');
-const codeblock = /```(.|\s)+```/gi;
+const codeblock = /(`{3})(js|javascript)?\n([\s\S]*)\1/gi;
 
 class CodeArgumentType extends ArgumentType {
 	constructor(client) {
@@ -19,7 +19,7 @@ class CodeArgumentType extends ArgumentType {
 				return null;
 			}
 		}
-		if (codeblock.test(value)) return value.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+		if (codeblock.test(value)) return value.match(codeblock)[0].replace(/(`{3})(js|javascript)?/gi, '').trim();
 		return null;
 	}
 }
