@@ -21,6 +21,7 @@ class CodeArgumentType extends ArgumentType {
 		}
 		if (codeblock.test(value)) {
 			const parsed = codeblock.exec(value);
+			console.log(parsed);
 			return {
 				code: parsed[3].trim(),
 				lang: parsed[2]
