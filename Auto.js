@@ -9,6 +9,7 @@ const client = new CommandoClient({
 	unknownCommandResponse: false,
 	disabledEvents: ['TYPING_START']
 });
+const emoji = require('./assets/json/emoji');
 
 client.registry
 	.registerDefaultTypes()
@@ -35,6 +36,18 @@ client.on('message', msg => {
 	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
 	const code = msg.content.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
 	client.registry.resolveCommand('lint:lint-default').run(msg, { code }, true);
+});
+
+client.on('messageReactionAdd', (reaction, user) => {
+	const msg = reaction.message;
+	if (msg.author.id !== user.id) return;
+	if (reaction.emoji.id !== emoji.failure.id) return;
+	if (!msg.reactions.has(emoji.failure.id)) return;
+	if (!msg.reactions.get(emoji.failure.id).users.has(client.user.id)) return;
+	const valid = codeblock.test(msg.content);
+	if (!valid) return;
+	const code = msg.content.match(codeblock)[0].replace(/```(js|javascript)?|```/gi, '').trim();
+	client.registry.resolveCommand('lint:lint-default').run(msg, { code });
 });
 
 client.on('ready', () => {
