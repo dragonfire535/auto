@@ -41,7 +41,7 @@ client.on('message', msg => {
 	client.registry.resolveCommand('lint:default').run(msg, { code }, true);
 });
 
-client.on('messageUpdate', msg => {
+client.on('messageUpdate', (oldMsg, msg) => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
 	if (msg.channel.topic && msg.channel.topic.includes('<blocked>')) return;
 	if (!codeblock.test(msg.content)) return;
