@@ -21,6 +21,8 @@ module.exports = class BeautifyCommand extends Command {
 
 	run(msg, { code }) {
 		if (!code) return msg.reply('Invalid message!');
-		return msg.code('js', beautify(code));
+		const beautified = beautify(code);
+		if (!beautified) return msg.reply('I couldn\'t beautify your code!');
+		return msg.code('js', beautified);
 	}
 };
