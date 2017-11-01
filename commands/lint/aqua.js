@@ -13,7 +13,7 @@ module.exports = class LintAquaCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'lint-aqua',
-			aliases: ['lint-config-aqua'],
+			aliases: ['lint-config-aqua', 'eslint-aqua', 'eslint-config-aqua'],
 			group: 'lint',
 			memberName: 'aqua',
 			description: 'Lints code with eslint-config-aqua rules.',

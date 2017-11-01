@@ -11,7 +11,7 @@ module.exports = class LintDefaultCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'lint-default',
-			aliases: ['lint-recommended', 'lint'],
+			aliases: ['lint-recommended', 'lint', 'eslint', 'eslint-default', 'eslint-recommended'],
 			group: 'lint',
 			memberName: 'default',
 			description: 'Lints code with the recommended rules.',
