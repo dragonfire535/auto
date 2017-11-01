@@ -1,5 +1,6 @@
 const { Command } = require('discord.js-commando');
-const { linter } = require('eslint');
+const { Linter } = require('eslint');
+const linter = new Linter();
 const { stripIndents } = require('common-tags');
 const eslintConfig = require('../../assets/json/eslint-default');
 const goodMessages = require('../../assets/json/good-messages');
