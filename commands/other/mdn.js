@@ -7,7 +7,7 @@ module.exports = class MDNCommand extends Command {
 		super(client, {
 			name: 'mdn',
 			aliases: ['mozilla-developer-network'],
-			group: 'search',
+			group: 'other',
 			memberName: 'mdn',
 			description: 'Searches MDN for your query.',
 			clientPermissions: ['EMBED_LINKS'],
