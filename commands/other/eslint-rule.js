@@ -18,7 +18,7 @@ module.exports = class EslintRuleCommand extends Command {
 					key: 'rule',
 					prompt: 'Which rule would you like to get information on?',
 					type: 'string',
-					parse: rule => rule.replace(/ /g, '-')
+					parse: rule => rule.toLowerCase().replace(/ /g, '-')
 				}
 			]
 		});
