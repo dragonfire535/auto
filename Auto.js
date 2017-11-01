@@ -10,7 +10,7 @@ const client = new CommandoClient({
 	disabledEvents: ['TYPING_START']
 });
 const emoji = require('./assets/json/emoji');
-const codeblock = /(`{3})(js|javascript)?\n([\s\S]*)\1/i;
+const codeblock = /(`{3})(js|javascript)?\n?([\s\S]*)\1/i;
 
 client.registry
 	.registerDefaultTypes()
