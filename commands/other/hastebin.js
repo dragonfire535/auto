@@ -20,6 +20,7 @@ module.exports = class HastebinCommand extends Command {
 	}
 
 	async run(msg, { code }) {
+		if (!code) return msg.reply('Invalid message!');
 		try {
 			const { body } = await snekfetch
 				.post('https://hastebin.com/documents')
