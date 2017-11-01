@@ -33,13 +33,11 @@ module.exports = class LintDefaultCommand extends Command {
 		}
 		const errors = linter.verify(code.code, eslintConfig);
 		if (pattern && updated) {
-			if (msg.reactions.has(emoji.failure.id) || msg.reactions.has(emoji.success.id)) {
-				if (msg.reactions.get(emoji.failure.id).has(this.client.user.id)) {
-					await msg.reactions.get(emoji.failure.id).remove();
-				}
-				if (msg.reactions.get(emoji.success.id).has(this.client.user.id)) {
-					await msg.reactions.get(emoji.success.id).remove();
-				}
+			if (msg.reactions.has(emoji.failure.id) && msg.reactions.get(emoji.failure.id).users.has(this.client.user.id)) {
+				await msg.reactions.get(emoji.failure.id).remove();
+			}
+			if (msg.reactions.has(emoji.success.id) && msg.reactions.get(emoji.success.id).users.has(this.client.user.id)) {
+				await msg.reactions.get(emoji.success.id).remove();
 			}
 		}
 		if (!errors.length) {
