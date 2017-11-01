@@ -26,12 +26,22 @@ module.exports = class LintDefaultCommand extends Command {
 		});
 	}
 
-	async run(msg, { code }, pattern) {
+	async run(msg, { code }, pattern, updated) {
 		if (!code) {
 			if (pattern) return null;
 			return msg.reply('Invalid message!');
 		}
 		const errors = linter.verify(code.code, eslintConfig);
+		if (pattern && updated) {
+			if (msg.reactions.has(emoji.failure.id) || msg.reactions.has(emoji.success.id)) {
+				if (msg.reactions.get(emoji.failure.id).has(this.client.user.id)) {
+					await msg.reactions.get(emoji.failure.id).remove();
+				}
+				if (msg.reactions.get(emoji.success.id).has(this.client.user.id)) {
+					await msg.reactions.get(emoji.success.id).remove();
+				}
+			}
+		}
 		if (!errors.length) {
 			if (pattern) {
 				await msg.react(emoji.success.id);

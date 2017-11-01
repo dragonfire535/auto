@@ -41,6 +41,19 @@ client.on('message', msg => {
 	client.registry.resolveCommand('lint:default').run(msg, { code }, true);
 });
 
+client.on('messageUpdate', msg => {
+	if (msg.channel.type !== 'text' || msg.author.bot) return;
+	if (msg.channel.topic && msg.channel.topic.includes('<blocked>')) return;
+	if (!codeblock.test(msg.content)) return;
+	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
+	const parsed = codeblock.exec(msg.content);
+	const code = {
+		code: parsed[3].trim(),
+		lang: parsed[2]
+	};
+	client.registry.resolveCommand('lint:default').run(msg, { code }, true, true);
+});
+
 client.on('messageReactionAdd', (reaction, user) => {
 	const msg = reaction.message;
 	if (msg.author.id !== user.id) return;
