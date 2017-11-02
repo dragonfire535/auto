@@ -26,7 +26,11 @@ module.exports = class MDNCommand extends Command {
 		try {
 			const { body } = await snekfetch
 				.get('https://developer.mozilla.org/en-US/search.json')
-				.query({ q: query });
+				.query({
+					q: query,
+					locale: 'en-US',
+					highlight: false
+				});
 			if (!body.documents.length) return msg.say('Could not find any results.');
 			const data = body.documents[0];
 			const embed = new MessageEmbed()

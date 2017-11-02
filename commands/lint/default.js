@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando');
 const { Linter } = require('eslint');
 const linter = new Linter();
 const { stripIndents } = require('common-tags');
-const eslintConfig = require('../../assets/json/eslint-default');
+const config = require('../../assets/json/eslint-default');
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
 const emoji = require('../../assets/json/emoji');
@@ -31,7 +31,7 @@ module.exports = class LintDefaultCommand extends Command {
 			if (pattern) return null;
 			return msg.reply('Invalid message!');
 		}
-		const errors = linter.verify(code.code, eslintConfig);
+		const errors = linter.verify(code.code, config);
 		if (pattern && updated) {
 			if (msg.reactions.has(emoji.failure.id) && msg.reactions.get(emoji.failure.id).users.has(this.client.user.id)) {
 				await msg.reactions.get(emoji.failure.id).remove();
