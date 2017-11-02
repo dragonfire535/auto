@@ -21,6 +21,6 @@ module.exports = class BeautifyCommand extends Command {
 
 	run(msg, { code }) {
 		if (!code) return msg.reply('Invalid message!');
-		return msg.code(code.lang, beautify(code.code));
+		return msg.code(code.lang || 'js', beautify(code.code));
 	}
 };
