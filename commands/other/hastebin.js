@@ -9,6 +9,7 @@ module.exports = class HastebinCommand extends Command {
 			group: 'other',
 			memberName: 'hastebin',
 			description: 'Posts code to hastebin.',
+			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{
 					key: 'code',
