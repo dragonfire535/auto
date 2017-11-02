@@ -15,7 +15,8 @@ module.exports = class MDNCommand extends Command {
 				{
 					key: 'query',
 					prompt: 'What article would you like to search for?',
-					type: 'string'
+					type: 'string',
+					parse: query => query.replace(/#/g, '.prototype.')
 				}
 			]
 		});
