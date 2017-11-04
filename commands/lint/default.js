@@ -58,7 +58,7 @@ module.exports = class LintDefaultCommand extends Command {
 			errorMap.push(`...${len} more.`);
 		}
 		if (pattern) {
-			const filter = res => res.users.has(res.message.author.id) && res.emoji.id === emoji.failure.id;
+			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === emoji.failure.id;
 			const msgs = await msg.channel.awaitReactions(filter, {
 				max: 1,
 				time: 30000
