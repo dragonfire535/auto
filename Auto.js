@@ -35,7 +35,7 @@ client.on('message', msg => {
 	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
 	const parsed = codeblock.exec(msg.content);
 	const code = {
-		code: parsed[2].trim(),
+		code: parsed[2],
 		lang: parsed[1]
 	};
 	client.registry.resolveCommand('lint:default').run(msg, { code }, true);
@@ -48,7 +48,7 @@ client.on('messageUpdate', (oldMsg, msg) => {
 	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
 	const parsed = codeblock.exec(msg.content);
 	const code = {
-		code: parsed[2].trim(),
+		code: parsed[2],
 		lang: parsed[1]
 	};
 	client.registry.resolveCommand('lint:default').run(msg, { code }, true, true);
@@ -63,7 +63,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 	if (!codeblock.test(msg.content)) return;
 	const parsed = codeblock.exec(msg.content);
 	const code = {
-		code: parsed[2].trim(),
+		code: parsed[2],
 		lang: parsed[1]
 	};
 	client.registry.resolveCommand('lint:default').run(msg, { code });
