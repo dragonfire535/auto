@@ -10,6 +10,18 @@ const client = new CommandoClient({
 	disabledEvents: ['TYPING_START']
 });
 const codeblock = /```(?:(js|javascript)\n)?\s*([^]+?)\s*```/i;
+const runLint = (msg, updated = false) => {
+	if (msg.channel.type !== 'text' || msg.author.bot) return;
+	if (msg.channel.topic && msg.channel.topic.includes('<auto:block-all>')) return;
+	if (!codeblock.test(msg.content) || msg.channel.topic.includes('<auto:no-scan>')) return;
+	if (!msg.channel.permissionsFor(msg.client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
+	const parsed = codeblock.exec(msg.content);
+	const code = {
+		code: parsed[2],
+		lang: parsed[1]
+	};
+	msg.client.registry.resolveCommand('lint:default').run(msg, { code }, true, updated);
+};
 
 client.registry
 	.registerDefaultTypes()
@@ -27,31 +39,9 @@ client.registry
 	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
-client.on('message', msg => {
-	if (msg.channel.type !== 'text' || msg.author.bot) return;
-	if (msg.channel.topic && msg.channel.topic.includes('<blocked>')) return;
-	if (!codeblock.test(msg.content)) return;
-	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
-	const parsed = codeblock.exec(msg.content);
-	const code = {
-		code: parsed[2],
-		lang: parsed[1]
-	};
-	client.registry.resolveCommand('lint:default').run(msg, { code }, true);
-});
+client.on('message', runLint);
 
-client.on('messageUpdate', (oldMsg, msg) => {
-	if (msg.channel.type !== 'text' || msg.author.bot) return;
-	if (msg.channel.topic && msg.channel.topic.includes('<blocked>')) return;
-	if (!codeblock.test(msg.content)) return;
-	if (!msg.channel.permissionsFor(client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
-	const parsed = codeblock.exec(msg.content);
-	const code = {
-		code: parsed[2],
-		lang: parsed[1]
-	};
-	client.registry.resolveCommand('lint:default').run(msg, { code }, true, true);
-});
+client.on('messageUpdate', (oldMsg, msg) => runLint(msg, true));
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
