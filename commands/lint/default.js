@@ -47,10 +47,6 @@ module.exports = class LintDefaultCommand extends Command {
 			}
 			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
 		}
-		if (pattern) {
-			await msg.react(emoji.failure.id);
-			return null;
-		}
 		let errorMap = errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``);
 		if (errorMap.length > 10) {
 			const len = errorMap.length - 10;
@@ -58,6 +54,7 @@ module.exports = class LintDefaultCommand extends Command {
 			errorMap.push(`...${len} more.`);
 		}
 		if (pattern) {
+			await msg.react(emoji.failure.id);
 			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === emoji.failure.id;
 			const reactions = await msg.awaitReactions(filter, {
 				max: 1,
