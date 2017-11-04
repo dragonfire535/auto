@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const snekfetch = require('snekfetch');
+const { trimArray } = require('../../util/Util');
 
 module.exports = class NPMCommand extends Command {
 	constructor(client) {
@@ -26,18 +27,8 @@ module.exports = class NPMCommand extends Command {
 		try {
 			const { body } = await snekfetch.get(`https://registry.npmjs.com/${query}`);
 			const version = body.versions[body['dist-tags'].latest];
-			let maintainers = body.maintainers.map(user => user.name);
-			if (maintainers.length > 10) {
-				const len = maintainers.length - 10;
-				maintainers = maintainers.slice(0, 10);
-				maintainers.push(`...${len} more.`);
-			}
-			let dependencies = version.dependencies ? Object.keys(version.dependencies) : null;
-			if (dependencies && dependencies.length > 10) {
-				const len = dependencies.length - 10;
-				dependencies = dependencies.slice(0, 10);
-				dependencies.push(`...${len} more.`);
-			}
+			const maintainers = trimArray(body.maintainers.map(user => user.name));
+			const dependencies = version.dependencies ? trimArray(Object.keys(version.dependencies)) : null;
 			const embed = new MessageEmbed()
 				.setColor(0xCB0000)
 				.setAuthor('NPM', 'https://i.imgur.com/ErKf5Y0.png')

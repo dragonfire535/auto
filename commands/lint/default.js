@@ -2,6 +2,7 @@ const { Command } = require('discord.js-commando');
 const { Linter } = require('eslint');
 const linter = new Linter();
 const { stripIndents } = require('common-tags');
+const { trimArray } = require('../../util/Util');
 const config = require('../../assets/json/eslint-default');
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
@@ -47,12 +48,7 @@ module.exports = class LintDefaultCommand extends Command {
 			}
 			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
 		}
-		let errorMap = errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``);
-		if (errorMap.length > 10) {
-			const len = errorMap.length - 10;
-			errorMap = errorMap.slice(0, 10);
-			errorMap.push(`...${len} more.`);
-		}
+		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		if (pattern) {
 			await msg.react(emoji.failure.id);
 			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === emoji.failure.id;

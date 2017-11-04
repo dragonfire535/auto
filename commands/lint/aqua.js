@@ -2,6 +2,7 @@ const { Command } = require('discord.js-commando');
 const { Linter } = require('eslint');
 const linter = new Linter();
 const { stripIndents } = require('common-tags');
+const { trimArray } = require('../../util/Util');
 const config = require('eslint-config-aqua');
 config.rules['eol-last'] = 'off';
 config.rules.indent = ['error', 4];
@@ -34,12 +35,7 @@ module.exports = class LintAquaCommand extends Command {
 		if (!errors.length) {
 			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
 		}
-		let errorMap = errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``);
-		if (errorMap.length > 10) {
-			const len = errorMap.length - 10;
-			errorMap = errorMap.slice(0, 10);
-			errorMap.push(`...${len} more.`);
-		}
+		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		return msg.reply(stripIndents`
 			${emoji.failure.string} ${badMessages[Math.floor(Math.random() * badMessages.length)]}
 			${errorMap.join('\n')}
