@@ -1,7 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const snekfetch = require('snekfetch');
-const { shorten } = require('../../util/Util');
 
 module.exports = class NPMCommand extends Command {
 	constructor(client) {
@@ -44,7 +43,7 @@ module.exports = class NPMCommand extends Command {
 				.setAuthor('NPM', 'https://i.imgur.com/ErKf5Y0.png')
 				.setTitle(body.name)
 				.setURL(`https://www.npmjs.com/package/${query}`)
-				.setDescription(body.description ? shorten(body.description) : 'No description.')
+				.setDescription(body.description || 'No description.')
 				.addField('❯ Version',
 					body['dist-tags'].latest, true)
 				.addField('❯ License',
