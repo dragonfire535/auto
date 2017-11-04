@@ -55,9 +55,9 @@ module.exports = class NPMCommand extends Command {
 				.addField('❯ Modified',
 					new Date(body.time.modified).toDateString(), true)
 				.addField('❯ Main File',
-					version.main, true)
+					version.main || '???', true)
 				.addField('❯ Dependencies',
-					dependencies ? dependencies.join(', ') : 'None')
+					dependencies && dependencies.length ? dependencies.join(', ') : 'None')
 				.addField('❯ Maintainers',
 					maintainers.join(', '));
 			return msg.embed(embed);
