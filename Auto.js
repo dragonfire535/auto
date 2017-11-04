@@ -9,7 +9,6 @@ const client = new CommandoClient({
 	unknownCommandResponse: false,
 	disabledEvents: ['TYPING_START']
 });
-const emoji = require('./assets/json/emoji');
 const codeblock = /```(?:(js|javascript)\n)?\s*([^]+?)\s*```/i;
 const runLint = (msg, updated = false) => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
@@ -43,21 +42,6 @@ client.registry
 client.on('message', runLint);
 
 client.on('messageUpdate', (oldMsg, msg) => runLint(msg, true));
-
-client.on('messageReactionAdd', (reaction, user) => {
-	const msg = reaction.message;
-	if (msg.author.id !== user.id) return;
-	if (reaction.emoji.id !== emoji.failure.id) return;
-	if (!msg.reactions.has(emoji.failure.id)) return;
-	if (!msg.reactions.get(emoji.failure.id).users.has(client.user.id)) return;
-	if (!codeblock.test(msg.content)) return;
-	const parsed = codeblock.exec(msg.content);
-	const code = {
-		code: parsed[2],
-		lang: parsed[1]
-	};
-	client.registry.resolveCommand('lint:default').run(msg, { code });
-});
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
