@@ -57,6 +57,14 @@ module.exports = class LintDefaultCommand extends Command {
 			errorMap = errorMap.slice(0, 10);
 			errorMap.push(`...${len} more.`);
 		}
+		if (pattern) {
+			const filter = reaction => reaction.users.has(reaction.message.author.id) && reaction.emoji.id === emoji.failure.id;
+			const msgs = await msg.channel.awaitReactions(filter, {
+				max: 1,
+				time: 30000
+			});
+			if (!msgs.size) return null;
+		}
 		return msg.reply(stripIndents`
 			${emoji.failure.string} ${badMessages[Math.floor(Math.random() * badMessages.length)]}
 			${errorMap.join('\n')}
