@@ -59,7 +59,7 @@ client.on('warn', err => console.warn('[WARNING]', err));
 
 client.dispatcher.addInhibitor(msg => {
 	if (msg.channel.type !== 'text' || !msg.channel.topic) return false;
-	if (msg.channel.topic.includes('<blocked>')) return 'topic blocked';
+	if (msg.channel.topic.includes('<auto:block-all>')) return 'topic blocked';
 	return false;
 });
 
