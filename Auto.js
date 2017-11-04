@@ -9,7 +9,6 @@ const client = new CommandoClient({
 	unknownCommandResponse: false,
 	disabledEvents: ['TYPING_START']
 });
-const emoji = require('./assets/json/emoji');
 const codeblock = /```(?:(js|javascript)\n)?\s*([^]+?)\s*```/i;
 
 client.registry
