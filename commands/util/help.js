@@ -28,15 +28,17 @@ module.exports = class HelpCommand extends Command {
 			if (commands.length === 1) {
 				const data = commands[0];
 				return msg.say(stripIndents`
-					__**Command ${data.name}**__
+					__Command **${data.name}**__${data.nsfw ? ' (NSFW)' : ''}${data.guildOnly ? ' (Usable only in servers)' : ''}
 					${data.description} ${data.details ? `\n_${data.details}_` : ''}
 
 					**Format**: ${msg.anyUsage(`${data.name} ${data.format || ''}`)}
 					**Aliases**: ${data.aliases.join(', ') || 'None'}
-					**Group**: ${data.group.name}
+					**Group**: ${data.group.name} (\`${data.groupID}:${data.memberName}\`)
+					**Examples**:
+					${data.examples ? data.examples.join('\n') : 'None'}
 				`);
 			} else if (commands.length > 1) {
-				return msg.say(`Multiple commands found: ${commands.map(c => c.name).join(', ')}`);
+				return msg.say(`Multiple commands found: ${commands.map(cmd => cmd.name).join(', ')}`);
 			}
 			return msg.say(`Could not identify command. Use ${msg.usage(null)} to view a list of commands.`);
 		} else {
@@ -45,7 +47,7 @@ module.exports = class HelpCommand extends Command {
 				.setDescription(`Use ${msg.usage('<command>')} to view detailed information about a command.`)
 				.setColor(0x00AE86);
 			for (const group of this.client.registry.groups.values()) {
-				embed.addField(`❯ ${group.name}`, group.commands.map(c => c.name).join(', ') || 'None');
+				embed.addField(`❯ ${group.name}`, group.commands.map(cmd => cmd.name).join(', ') || 'None');
 			}
 			try {
 				await msg.direct({ embed });
