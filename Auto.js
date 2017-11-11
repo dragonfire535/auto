@@ -9,7 +9,7 @@ const client = new CommandoClient({
 	unknownCommandResponse: false,
 	disabledEvents: ['TYPING_START']
 });
-const codeblock = /```(?:([^]+)\n)?\s*([^]+?)\s*```/i;
+const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
 const runLint = (msg, updated = false) => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
 	if (msg.channel.topic && msg.channel.topic.includes('<auto:block-all>')) return;

@@ -1,5 +1,5 @@
 const { ArgumentType } = require('discord.js-commando');
-const codeblock = /```(?:([^]+)\n)?\s*([^]+?)\s*```/i;
+const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
 
 class CodeArgumentType extends ArgumentType {
 	constructor(client) {
