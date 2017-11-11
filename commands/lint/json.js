@@ -14,7 +14,7 @@ module.exports = class LintJSONCommand extends Command {
 			name: 'lint-json',
 			aliases: ['eslint-json', 'eslint-plugin-json'],
 			group: 'lint',
-			memberName: 'default',
+			memberName: 'json',
 			description: 'Lints JSON.',
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
