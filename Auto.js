@@ -9,7 +9,7 @@ const client = new CommandoClient({
 	unknownCommandResponse: false,
 	disabledEvents: ['TYPING_START']
 });
-const codeblock = /```(?:(js|javascript)\n)?\s*([^]+?)\s*```/i;
+const codeblock = /```(?:([^]+)\n)?\s*([^]+?)\s*```/i;
 const runLint = (msg, updated = false) => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
 	if (msg.channel.topic && msg.channel.topic.includes('<auto:block-all>')) return;
@@ -20,7 +20,8 @@ const runLint = (msg, updated = false) => {
 		code: parsed[2],
 		lang: parsed[1]
 	};
-	msg.client.registry.resolveCommand('lint:default').run(msg, { code }, true, updated);
+	if (code.lang === 'json') msg.client.registry.resolveCommand('lint:json').run(msg, { code }, true, updated);
+	else msg.client.registry.resolveCommand('lint:default').run(msg, { code }, true, updated);
 };
 
 client.registry

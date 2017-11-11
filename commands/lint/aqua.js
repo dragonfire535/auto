@@ -31,6 +31,9 @@ module.exports = class LintAquaCommand extends Command {
 
 	run(msg, { code }) {
 		if (!code) return msg.reply('Invalid message!');
+		if (code.lang && !['js', 'javascript'].includes(code.lang)) {
+			return msg.reply('Only `js` or `javascript` codeblocks should be linted with this command.');
+		}
 		const errors = linter.verify(code.code, config);
 		if (!errors.length) {
 			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
