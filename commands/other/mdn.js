@@ -25,17 +25,16 @@ module.exports = class MDNCommand extends Command {
 
 	async run(msg, { query }) {
 		try {
-			const { body: data } = await snekfetch
+			const { body } = await snekfetch
 				.get('https://mdn.topkek.pw/search')
 				.query({ q: query });
-
-			if (!data.URL || !data.Title || !data.Summary) return msg.say('Could not find any results.');
+			if (!body.URL || !body.Title || !body.Summary) return msg.say('Could not find any results.');
 			const embed = new MessageEmbed()
 				.setColor(0x066FAD)
 				.setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png')
-				.setURL(`https://developer.mozilla.org${data.URL}`)
-				.setTitle(data.Title)
-				.setDescription(toMarkdown(data.Summary));
+				.setURL(`https://developer.mozilla.org${body.URL}`)
+				.setTitle(body.Title)
+				.setDescription(toMarkdown(body.Summary));
 			return msg.embed(embed);
 		} catch (err) {
 			return msg.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
