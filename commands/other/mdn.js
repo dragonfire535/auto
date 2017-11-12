@@ -3,6 +3,8 @@ const { MessageEmbed } = require('discord.js');
 const snekfetch = require('snekfetch');
 const toMarkdown = require('to-markdown');
 
+const root = 'https://developer.mozilla.org';
+
 module.exports = class MDNCommand extends Command {
 	constructor(client) {
 		super(client, {
@@ -32,9 +34,14 @@ module.exports = class MDNCommand extends Command {
 			const embed = new MessageEmbed()
 				.setColor(0x066FAD)
 				.setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png')
-				.setURL(`https://developer.mozilla.org${body.URL}`)
+				.setURL(`${root}${body.URL}`)
 				.setTitle(body.Title)
-				.setDescription(toMarkdown(body.Summary));
+				.setDescription(toMarkdown(body.Summary, {
+					converters: [{
+						filter: 'a',
+						replacement: (text, node) => `[${text}](${root}${node.href})`
+					}]
+				}));
 			return msg.embed(embed);
 		} catch (err) {
 			return msg.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
