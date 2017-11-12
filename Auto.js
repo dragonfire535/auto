@@ -46,7 +46,7 @@ client.on('messageUpdate', (oldMsg, msg) => runLint(msg, true));
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
-	client.user.setActivity(`${AUTO_COMMAND_PREFIX} lint to scan!`);
+	client.user.setActivity('for codeblocks', { type: 'WATCHING' });
 });
 
 client.on('disconnect', event => {
