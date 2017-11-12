@@ -2,7 +2,6 @@ const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const snekfetch = require('snekfetch');
 const toMarkdown = require('to-markdown');
-
 const root = 'https://developer.mozilla.org';
 
 module.exports = class MDNCommand extends Command {
