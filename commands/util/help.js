@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { util: { disambiguation } } = require('discord.js-commando');
 
 module.exports = class HelpCommand extends Command {
 	constructor(client) {
@@ -9,7 +10,7 @@ module.exports = class HelpCommand extends Command {
 			aliases: ['commands', 'command-list'],
 			group: 'util',
 			memberName: 'help',
-			description: 'Displays a list of available commands, or detailed information for a specified command.',
+			description: 'Displays a list of available commands, or detailed information for a specific command.',
 			guarded: true,
 			args: [
 				{
@@ -34,11 +35,11 @@ module.exports = class HelpCommand extends Command {
 					**Format**: ${msg.anyUsage(`${data.name} ${data.format || ''}`)}
 					**Aliases**: ${data.aliases.join(', ') || 'None'}
 					**Group**: ${data.group.name} (\`${data.groupID}:${data.memberName}\`)
-					**Examples**:
-					${data.examples ? data.examples.join('\n') : 'None'}
 				`);
+			} else if (commands.length > 15) {
+				return msg.say('Multiple commands found. Please be more specific.');
 			} else if (commands.length > 1) {
-				return msg.say(`Multiple commands found: ${commands.map(cmd => cmd.name).join(', ')}`);
+				return msg.say(disambiguation(commands, 'commands'));
 			}
 			return msg.say(`Could not identify command. Use ${msg.usage(null)} to view a list of commands.`);
 		} else {
@@ -50,8 +51,10 @@ module.exports = class HelpCommand extends Command {
 				embed.addField(`❯ ${group.name}`, group.commands.map(cmd => cmd.name).join(', ') || 'None');
 			}
 			try {
-				await msg.direct({ embed });
-				return msg.say('📬 Sent you a DM with information.');
+				const msgs = [];
+				msgs.push(await msg.direct({ embed }));
+				if (msg.channel.type !== 'dm') msgs.push(await msg.say('📬 Sent you a DM with information.'));
+				return msgs;
 			} catch (err) {
 				return msg.reply('Failed to send DM. You probably have DMs disabled.');
 			}
