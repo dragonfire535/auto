@@ -31,7 +31,7 @@
 		"node": ">=8.0.0"
 	},
 	"dependencies": {
-		"common-tags": "^1.4.0",
+		"common-tags": "^1.5.1",
 		"discord.js": "github:hydrabolt/discord.js",
 		"discord.js-commando": "github:gawdl3y/discord.js-commando",
 		"erlpack": "github:discordapp/erlpack",
