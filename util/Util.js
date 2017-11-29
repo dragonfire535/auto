@@ -1,4 +1,9 @@
 class Util {
+	static pad(str, len = 2) {
+		str = `${str}`;
+		return str.length >= len ? str : `${'0'.repeat(len - str.length)}${str}`;
+	}
+
 	static duration(ms) {
 		const sec = Math.floor((ms / 1000) % 60);
 		const min = Math.floor((ms / (1000 * 60)) % 60);
@@ -7,7 +12,7 @@ class Util {
 			hours: hrs,
 			minutes: min,
 			seconds: sec,
-			format: () => `${hrs < 10 ? `0${hrs}` : hrs}:${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
+			format: () => `${this.pad(hrs)}:${this.pad(min)}:${this.pad(sec)}`
 		};
 	}
 
