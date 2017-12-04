@@ -12,8 +12,8 @@ const client = new CommandoClient({
 const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
 const runLint = (msg, updated = false) => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
-	if (msg.channel.topic && msg.channel.topic.includes('<auto:block-all>')) return;
-	if (!codeblock.test(msg.content) || msg.channel.topic.includes('<auto:no-scan>')) return;
+	if (!codeblock.test(msg.content)) return;
+	if (msg.channel.topic && msg.channel.topic.includes('<auto:no-scan>')) return;
 	if (!msg.channel.permissionsFor(msg.client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
 	const parsed = codeblock.exec(msg.content);
 	const code = {
@@ -57,12 +57,6 @@ client.on('disconnect', event => {
 client.on('error', err => console.error('[ERROR]', err));
 
 client.on('warn', err => console.warn('[WARNING]', err));
-
-client.dispatcher.addInhibitor(msg => {
-	if (msg.channel.type !== 'text' || !msg.channel.topic) return false;
-	if (msg.channel.topic.includes('<auto:block-all>')) return 'topic blocked';
-	return false;
-});
 
 client.login(AUTO_TOKEN);
 
