@@ -35,11 +35,11 @@
 		"discord.js": "github:hydrabolt/discord.js",
 		"discord.js-commando": "github:gawdl3y/discord.js-commando",
 		"erlpack": "github:discordapp/erlpack",
-		"eslint": "^4.11.0",
+		"eslint": "^4.12.1",
 		"eslint-config-aqua": "^2.0.1",
 		"eslint-plugin-json": "^1.2.0",
 		"js-beautify": "^1.7.4",
-		"snekfetch": "^3.5.8",
+		"snekfetch": "^3.6.0",
 		"to-markdown": "^3.1.0",
 		"uws": "^8.14.1",
 		"zlib-sync": "^0.1.3"
