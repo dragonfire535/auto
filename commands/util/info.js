@@ -27,7 +27,7 @@ module.exports = class InfoCommand extends Command {
 			.addField('❯ Commands',
 				this.client.registry.commands.size, true)
 			.addField('❯ Home Server',
-				`[Here](https://${this.client.options.invite})`, true)
+				`[Here](${this.client.options.invite})`, true)
 			.addField('❯ Memory Usage',
 				`${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`, true)
 			.addField('❯ Uptime',
