@@ -44,7 +44,7 @@ module.exports = class StackOverflowCommand extends Command {
 				.setAuthor('Stack Overflow', 'https://i.imgur.com/P2jAgE3.png')
 				.setURL(data.link)
 				.setTitle(data.title)
-				.addField('ID',
+				.addField('❯ ID',
 					data.question_id, true)
 				.addField('❯ Asker',
 					`[${data.owner.display_name}](${data.owner.link})`, true)
