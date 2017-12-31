@@ -35,11 +35,11 @@ module.exports = class LintAquaCommand extends Command {
 		}
 		const errors = linter.verify(code.code, config);
 		if (!errors.length) {
-			return msg.reply(`✅ ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
+			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		}
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		return msg.reply(stripIndents`
-			❌ ${badMessages[Math.floor(Math.random() * badMessages.length)]}
+			${badMessages[Math.floor(Math.random() * badMessages.length)]}
 			${errorMap.join('\n')}
 		`);
 	}

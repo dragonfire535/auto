@@ -53,7 +53,7 @@ module.exports = class LintJSONCommand extends Command {
 				await msg.react('✅');
 				return null;
 			}
-			return msg.reply(`✅ ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
+			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		}
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		if (pattern) {
@@ -66,7 +66,7 @@ module.exports = class LintJSONCommand extends Command {
 			if (!reactions.size) return null;
 		}
 		return msg.reply(stripIndents`
-			❌ ${badMessages[Math.floor(Math.random() * badMessages.length)]}
+			${badMessages[Math.floor(Math.random() * badMessages.length)]}
 			${errorMap.join('\n')}
 		`);
 	}
