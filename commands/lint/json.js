@@ -6,7 +6,6 @@ const { trimArray } = require('../../util/Util');
 const json = require('eslint-plugin-json').processors['.json'];
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
-const emoji = require('../../assets/json/emoji');
 
 module.exports = class LintJSONCommand extends Command {
 	constructor(client) {
@@ -42,24 +41,24 @@ module.exports = class LintJSONCommand extends Command {
 			postprocess: json.postprocess
 		});
 		if (pattern && updated) {
-			if (msg.reactions.has(emoji.failure.id) && msg.reactions.get(emoji.failure.id).users.has(this.client.user.id)) {
-				await msg.reactions.get(emoji.failure.id).remove();
+			if (msg.reactions.has('❌') && msg.reactions.get('❌').users.has(this.client.user.id)) {
+				await msg.reactions.get('❌').remove();
 			}
-			if (msg.reactions.has(emoji.success.id) && msg.reactions.get(emoji.success.id).users.has(this.client.user.id)) {
-				await msg.reactions.get(emoji.success.id).remove();
+			if (msg.reactions.has('✅') && msg.reactions.get('✅').users.has(this.client.user.id)) {
+				await msg.reactions.get('✅').remove();
 			}
 		}
 		if (!errors.length) {
 			if (pattern) {
-				await msg.react(emoji.success.id);
+				await msg.react('✅');
 				return null;
 			}
-			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
+			return msg.reply(`✅ ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
 		}
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		if (pattern) {
-			await msg.react(emoji.failure.id);
-			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === emoji.failure.id;
+			await msg.react('❌');
+			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.name === '❌';
 			const reactions = await msg.awaitReactions(filter, {
 				max: 1,
 				time: 30000
@@ -67,7 +66,7 @@ module.exports = class LintJSONCommand extends Command {
 			if (!reactions.size) return null;
 		}
 		return msg.reply(stripIndents`
-			${emoji.failure.string} ${badMessages[Math.floor(Math.random() * badMessages.length)]}
+			❌ ${badMessages[Math.floor(Math.random() * badMessages.length)]}
 			${errorMap.join('\n')}
 		`);
 	}

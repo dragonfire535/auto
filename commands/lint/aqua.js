@@ -8,7 +8,6 @@ config.rules['eol-last'] = 'off';
 config.rules.indent = ['error', 4];
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
-const emoji = require('../../assets/json/emoji');
 
 module.exports = class LintAquaCommand extends Command {
 	constructor(client) {
@@ -36,11 +35,11 @@ module.exports = class LintAquaCommand extends Command {
 		}
 		const errors = linter.verify(code.code, config);
 		if (!errors.length) {
-			return msg.reply(`${emoji.success.string} ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
+			return msg.reply(`✅ ${goodMessages[Math.floor(Math.random() * goodMessages.length)]}`);
 		}
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		return msg.reply(stripIndents`
-			${emoji.failure.string} ${badMessages[Math.floor(Math.random() * badMessages.length)]}
+			❌ ${badMessages[Math.floor(Math.random() * badMessages.length)]}
 			${errorMap.join('\n')}
 		`);
 	}
