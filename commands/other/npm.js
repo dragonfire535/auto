@@ -8,24 +8,26 @@ module.exports = class NPMCommand extends Command {
 		super(client, {
 			name: 'npm',
 			aliases: ['npm-package'],
-			group: 'other',
+			group: 'search',
 			memberName: 'npm',
-			description: 'Gets information on an NPM package.',
+			description: 'Responds with information on an NPM package.',
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{
-					key: 'query',
+					key: 'pkg',
+					label: 'package',
 					prompt: 'What package would you like to get information on?',
 					type: 'string',
-					parse: query => encodeURIComponent(query.replace(/ /g, '-'))
+					parse: pkg => encodeURIComponent(pkg.replace(/ /g, '-'))
 				}
 			]
 		});
 	}
 
-	async run(msg, { query }) {
+	async run(msg, { pkg }) {
 		try {
-			const { body } = await snekfetch.get(`https://registry.npmjs.com/${query}`);
+			const { body } = await snekfetch.get(`https://registry.npmjs.com/${pkg}`);
+			if (body.time.unpublished) return msg.say('This package no longer exists.');
 			const version = body.versions[body['dist-tags'].latest];
 			const maintainers = trimArray(body.maintainers.map(user => user.name));
 			const dependencies = version.dependencies ? trimArray(Object.keys(version.dependencies)) : null;
@@ -33,7 +35,7 @@ module.exports = class NPMCommand extends Command {
 				.setColor(0xCB0000)
 				.setAuthor('NPM', 'https://i.imgur.com/ErKf5Y0.png')
 				.setTitle(body.name)
-				.setURL(`https://www.npmjs.com/package/${query}`)
+				.setURL(`https://www.npmjs.com/package/${pkg}`)
 				.setDescription(body.description || 'No description.')
 				.addField('❯ Version',
 					body['dist-tags'].latest, true)
@@ -41,9 +43,9 @@ module.exports = class NPMCommand extends Command {
 					body.license || 'None', true)
 				.addField('❯ Author',
 					body.author ? body.author.name : 'Unknown', true)
-				.addField('❯ Created',
+				.addField('❯ Creation Date',
 					new Date(body.time.created).toDateString(), true)
-				.addField('❯ Modified',
+				.addField('❯ Modification Date',
 					new Date(body.time.modified).toDateString(), true)
 				.addField('❯ Main File',
 					version.main || '???', true)
