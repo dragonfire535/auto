@@ -35,7 +35,7 @@
 		"discord.js": "github:hydrabolt/discord.js",
 		"discord.js-commando": "github:gawdl3y/discord.js-commando",
 		"erlpack": "github:discordapp/erlpack",
-		"eslint": "^4.13.1",
+		"eslint": "^4.14.0",
 		"eslint-config-aqua": "^2.0.1",
 		"eslint-plugin-json": "^1.2.0",
 		"js-beautify": "^1.7.5",
