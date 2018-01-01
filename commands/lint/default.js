@@ -6,6 +6,7 @@ const { trimArray } = require('../../util/Util');
 const config = require('../../assets/json/eslint-default');
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
+const { SUCCESS_EMOJI_ID, FAILURE_EMOJI_ID } = process.env;
 
 module.exports = class LintDefaultCommand extends Command {
 	constructor(client) {
@@ -37,24 +38,24 @@ module.exports = class LintDefaultCommand extends Command {
 		}
 		const errors = linter.verify(code.code, config);
 		if (pattern && updated) {
-			if (msg.reactions.has('❌') && msg.reactions.get('❌').users.has(this.client.user.id)) {
-				await msg.reactions.get('❌').remove();
+			if (msg.reactions.has(FAILURE_EMOJI_ID) && msg.reactions.get(FAILURE_EMOJI_ID).users.has(this.client.user.id)) {
+				await msg.reactions.get(FAILURE_EMOJI_ID).remove();
 			}
-			if (msg.reactions.has('✅') && msg.reactions.get('✅').users.has(this.client.user.id)) {
-				await msg.reactions.get('✅').remove();
+			if (msg.reactions.has(SUCCESS_EMOJI_ID) && msg.reactions.get(SUCCESS_EMOJI_ID).users.has(this.client.user.id)) {
+				await msg.reactions.get(SUCCESS_EMOJI_ID).remove();
 			}
 		}
 		if (!errors.length) {
 			if (pattern) {
-				await msg.react('✅');
+				await msg.react(SUCCESS_EMOJI_ID);
 				return null;
 			}
 			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		}
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		if (pattern) {
-			await msg.react('❌');
-			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.name === '❌';
+			await msg.react(FAILURE_EMOJI_ID);
+			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.name === FAILURE_EMOJI_ID;
 			const reactions = await msg.awaitReactions(filter, {
 				max: 1,
 				time: 30000
