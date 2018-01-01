@@ -59,7 +59,7 @@ module.exports = class LintJSONCommand extends Command {
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		if (pattern) {
 			await msg.react(FAILURE_EMOJI_ID);
-			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.name === FAILURE_EMOJI_ID;
+			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === FAILURE_EMOJI_ID;
 			const reactions = await msg.awaitReactions(filter, {
 				max: 1,
 				time: 30000
