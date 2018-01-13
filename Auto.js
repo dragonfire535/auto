@@ -44,7 +44,7 @@ client.on('message', runLint);
 
 client.on('messageUpdate', (oldMsg, msg) => runLint(msg, true));
 
-client.on('unknownCommand', (msg) => msg.reply('Invalid message!'));
+client.on('unknownCommand', msg => msg.reply('Invalid message!'));
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
