@@ -28,7 +28,7 @@ module.exports = class LintJSONCommand extends Command {
 	}
 
 	async run(msg, { code }, pattern, updated) {
-		if (!code) {
+		if (!code || !code.code) {
 			if (pattern) return null;
 			return msg.reply('Invalid message!');
 		}
@@ -43,10 +43,10 @@ module.exports = class LintJSONCommand extends Command {
 		});
 		if (pattern && updated) {
 			if (msg.reactions.has(FAILURE_EMOJI_ID) && msg.reactions.get(FAILURE_EMOJI_ID).users.has(this.client.user.id)) {
-				await msg.reactions.get(FAILURE_EMOJI_ID).remove();
+				await msg.reactions.get(FAILURE_EMOJI_ID).users.remove(this.client.user);
 			}
 			if (msg.reactions.has(SUCCESS_EMOJI_ID) && msg.reactions.get(SUCCESS_EMOJI_ID).users.has(this.client.user.id)) {
-				await msg.reactions.get(SUCCESS_EMOJI_ID).remove();
+				await msg.reactions.get(SUCCESS_EMOJI_ID).users.remove(this.client.user);
 			}
 		}
 		if (!errors.length) {
