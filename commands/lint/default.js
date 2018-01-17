@@ -28,7 +28,7 @@ module.exports = class LintDefaultCommand extends Command {
 	}
 
 	async run(msg, { code }, pattern, updated) {
-		if (!code || !code.code) {
+		if (!code) {
 			if (pattern) return null;
 			return msg.reply('Invalid message!');
 		}

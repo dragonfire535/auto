@@ -29,7 +29,7 @@ module.exports = class LintAquaCommand extends Command {
 	}
 
 	run(msg, { code }) {
-		if (!code || !code.code) return msg.reply('Invalid message!');
+		if (!code) return msg.reply('Invalid message!');
 		if (code.lang && !['js', 'javascript'].includes(code.lang)) {
 			return msg.reply('Only `js` or `javascript` codeblocks should be linted with this command.');
 		}
