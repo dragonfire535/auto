@@ -32,8 +32,8 @@
 	},
 	"dependencies": {
 		"common-tags": "^1.7.2",
-		"discord.js": "github:hydrabolt/discord.js",
-		"discord.js-commando": "github:gawdl3y/discord.js-commando",
+		"discord.js": "github:discordjs/discord.js",
+		"discord.js-commando": "github:discordjs/Commando",
 		"erlpack": "github:discordapp/erlpack",
 		"eslint": "^4.15.0",
 		"eslint-config-aqua": "^2.0.1",
