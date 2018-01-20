@@ -48,7 +48,7 @@ client.on('unknownCommand', msg => msg.reply('Invalid message!'));
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
-	client.user.setActivity('for codeblocks', { type: 'WATCHING' });
+	client.user.setActivity('for bad code', { type: 'WATCHING' });
 });
 
 client.on('disconnect', event => {
