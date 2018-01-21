@@ -56,9 +56,13 @@ client.on('disconnect', event => {
 	process.exit(0);
 });
 
+client.on('commandRun', command => console.log(`[COMMAND] Ran command ${command.groupID}:${command.memberName}.`));
+
 client.on('error', err => console.error('[ERROR]', err));
 
 client.on('warn', err => console.warn('[WARNING]', err));
+
+client.on('commandError', (command, err) => console.error('[COMMAND ERROR]', command.name, err));
 
 client.login(AUTO_TOKEN);
 
