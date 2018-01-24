@@ -18,7 +18,7 @@ const runLint = (msg, updated = false) => {
 	const parsed = codeblock.exec(msg.content);
 	const code = {
 		code: parsed[2],
-		lang: parsed[1]
+		lang: parsed[1].toLowerCase()
 	};
 	if (code.lang === 'json') msg.client.registry.resolveCommand('lint:json').run(msg, { code }, true, updated);
 	else msg.client.registry.resolveCommand('lint:default').run(msg, { code }, true, updated);

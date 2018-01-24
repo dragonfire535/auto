@@ -23,7 +23,7 @@ class CodeArgumentType extends ArgumentType {
 			const parsed = codeblock.exec(value);
 			return {
 				code: parsed[2],
-				lang: parsed[1]
+				lang: parsed[1].toLowerCase()
 			};
 		}
 		return null;
