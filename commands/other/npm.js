@@ -48,7 +48,7 @@ module.exports = class NPMCommand extends Command {
 				.addField('❯ Modification Date',
 					new Date(body.time.modified).toDateString(), true)
 				.addField('❯ Main File',
-					version.main || '???', true)
+					version.main || 'index.js', true)
 				.addField('❯ Dependencies',
 					dependencies && dependencies.length ? dependencies.join(', ') : 'None')
 				.addField('❯ Maintainers',
