@@ -31,7 +31,7 @@ module.exports = class InfoCommand extends Command {
 			.addField('❯ Memory Usage',
 				`${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`, true)
 			.addField('❯ Uptime',
-				duration(this.client.uptime).format(), true)
+				duration(this.client.uptime), true)
 			.addField('❯ Version',
 				`v${version}`, true)
 			.addField('❯ Node Version',

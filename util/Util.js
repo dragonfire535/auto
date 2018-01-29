@@ -1,14 +1,9 @@
 class Util {
 	static duration(ms) {
-		const sec = Math.floor((ms / 1000) % 60);
-		const min = Math.floor((ms / (1000 * 60)) % 60);
-		const hrs = Math.floor(ms / (1000 * 60 * 60));
-		return {
-			hours: hrs,
-			minutes: min,
-			seconds: sec,
-			format: () => `${hrs < 10 ? `0${hrs}` : hrs}:${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
-		};
+		const sec = Math.floor((ms / 1000) % 60).toString();
+		const min = Math.floor((ms / (1000 * 60)) % 60).toString();
+		const hrs = Math.floor(ms / (1000 * 60 * 60)).toString();
+		return `${hrs.padStart(2, '0')}:${min.padStart(2, '0')}:${sec.padStart(2, '0')}`;
 	}
 
 	static trimArray(arr, maxLen = 10) {

@@ -13,6 +13,6 @@ module.exports = class UptimeCommand extends Command {
 	}
 
 	run(msg) {
-		return msg.say(duration(this.client.uptime).format());
+		return msg.say(duration(this.client.uptime));
 	}
 };
