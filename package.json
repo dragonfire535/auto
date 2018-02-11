@@ -10,7 +10,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://bitbucket.org/dragonfire535/auto.git"
+		"url": "git+https://github.com/dragonfire535/auto.git"
 	},
 	"keywords": [
 		"bot",
@@ -24,9 +24,9 @@
 	"author": "dragonfire535 <danielbodendahl@gmail.com>",
 	"license": "GPL-3.0",
 	"bugs": {
-		"url": "https://bitbucket.org/dragonfire535/auto/issues"
+		"url": "https://github.com/dragonfire535/auto/issues"
 	},
-	"homepage": "https://bitbucket.org/dragonfire535/auto#readme",
+	"homepage": "https://github.com/dragonfire535/auto#readme",
 	"engines": {
 		"node": ">=8.0.0"
 	},
