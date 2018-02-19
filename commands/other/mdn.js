@@ -26,6 +26,7 @@ module.exports = class MDNCommand extends Command {
 	}
 
 	async run(msg, { query }) {
+		console.log(query);
 		try {
 			const { body } = await snekfetch
 				.get('https://mdn.topkek.pw/search')
