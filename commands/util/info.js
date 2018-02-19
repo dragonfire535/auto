@@ -19,7 +19,7 @@ module.exports = class InfoCommand extends Command {
 	run(msg) {
 		const embed = new MessageEmbed()
 			.setColor(0x00AE86)
-			.setFooter('©2017 dragonfire535#8081')
+			.setFooter('©2017-2018 dragonfire535#8081')
 			.addField('❯ Servers',
 				this.client.guilds.size, true)
 			.addField('❯ Shards',
@@ -27,7 +27,7 @@ module.exports = class InfoCommand extends Command {
 			.addField('❯ Commands',
 				this.client.registry.commands.size, true)
 			.addField('❯ Home Server',
-				`[Here](${this.client.options.invite})`, true)
+				this.client.options.invite ? `[Here](${this.client.options.invite})` : 'None', true)
 			.addField('❯ Memory Usage',
 				`${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`, true)
 			.addField('❯ Uptime',
