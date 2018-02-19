@@ -12,6 +12,7 @@ module.exports = class MDNCommand extends Command {
 			group: 'other',
 			memberName: 'mdn',
 			description: 'Searches MDN for your query.',
+			patterns: [/^(?:mdn,) (.+)/i],
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{
