@@ -1,0 +1,6 @@
+sudo: false
+language: node_js
+node_js:
+  - '9'
+install: npm i -g eslint eslint-config-aqua eslint-plugin-json
+test: npm test
