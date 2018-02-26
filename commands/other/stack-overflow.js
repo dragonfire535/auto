@@ -41,7 +41,7 @@ module.exports = class StackOverflowCommand extends Command {
 			const data = body.items[0];
 			const embed = new MessageEmbed()
 				.setColor(0xF48023)
-				.setAuthor('Stack Overflow', 'https://i.imgur.com/P2jAgE3.png')
+				.setAuthor('Stack Overflow', 'https://i.imgur.com/P2jAgE3.png', 'https://stackoverflow.com/')
 				.setURL(data.link)
 				.setTitle(data.title)
 				.addField('❯ ID',

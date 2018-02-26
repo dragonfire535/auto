@@ -39,7 +39,7 @@ module.exports = class MDNCommand extends Command {
 			});
 			const embed = new MessageEmbed()
 				.setColor(0x066FAD)
-				.setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png')
+				.setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png', 'https://developer.mozilla.org/')
 				.setURL(`${root}${body.URL}`)
 				.setTitle(body.Title)
 				.setDescription(turndown.turndown(body.Summary));
