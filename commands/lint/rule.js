@@ -9,7 +9,7 @@ module.exports = class LintRuleCommand extends Command {
 		super(client, {
 			name: 'lint-rule',
 			aliases: ['eslint-rule', 'rule'],
-			group: 'other',
+			group: 'lint',
 			memberName: 'rule',
 			description: 'Gets information on an eslint rule.',
 			clientPermissions: ['EMBED_LINKS'],
