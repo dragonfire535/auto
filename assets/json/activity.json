@@ -1,0 +1,38 @@
+[
+	{
+		"text": "for bad code",
+		"type": "WATCHING"
+	},
+	{
+		"text": "for good code",
+		"type": "WATCHING"
+	},
+	{
+		"text": "for half-decent code",
+		"type": "WATCHING"
+	},
+	{
+		"text": "NPM install my deps 🔥",
+		"type": "WATCHING"
+	},
+	{
+		"text": "you eat pant",
+		"type": "WATCHING"
+	},
+	{
+		"text": "ESLint fail",
+		"type": "WATCHING"
+	},
+	{
+		"text": "with my hubcaps",
+		"type": "PLAYING"
+	},
+	{
+		"text": "noobs fail at code",
+		"type": "WATCHING"
+	},
+	{
+		"text": "with a linter",
+		"type": "PLAYING"
+	}
+]

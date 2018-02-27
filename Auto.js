@@ -9,6 +9,7 @@ const client = new CommandoClient({
 	unknownCommandResponse: false,
 	disabledEvents: ['TYPING_START']
 });
+const activities = require('./assets/json/activity');
 const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
 const runLint = (msg, updated = false) => {
 	if (msg.channel.type !== 'text' || msg.author.bot) return;
@@ -49,7 +50,10 @@ client.on('unknownCommand', msg => msg.reply('Invalid message!'));
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
-	client.user.setActivity('for bad code', { type: 'WATCHING' });
+	client.setInterval(() => {
+		const activity = activities[Math.floor(Math.random() * activities.length)];
+		client.user.setActivity(activity.text, { type: activity.type });
+	}, 60000);
 });
 
 client.on('disconnect', event => {
