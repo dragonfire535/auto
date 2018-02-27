@@ -28,10 +28,6 @@ module.exports = class LintJSONCommand extends Command {
 	}
 
 	async run(msg, { code }, pattern, updated) {
-		if (!code) {
-			if (pattern) return null;
-			return msg.reply('Invalid message!');
-		}
 		if (code.lang && code.lang !== 'json') {
 			if (pattern) return null;
 			return msg.reply('Only `json` codeblocks should be linted with this command.');

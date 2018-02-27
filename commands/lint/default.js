@@ -28,10 +28,6 @@ module.exports = class LintDefaultCommand extends Command {
 	}
 
 	async run(msg, { code }, pattern, updated) {
-		if (!code) {
-			if (pattern) return null;
-			return msg.reply('Invalid message!');
-		}
 		if (code.lang && !['js', 'javascript'].includes(code.lang)) {
 			if (pattern) return null;
 			return msg.reply('Only `js` or `javascript` codeblocks should be linted with this command.');
