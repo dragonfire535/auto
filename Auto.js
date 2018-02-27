@@ -30,6 +30,7 @@ client.registry
 	.registerGroups([
 		['util', 'Utility'],
 		['lint', 'Lint'],
+		['search', 'Search'],
 		['other', 'Other']
 	])
 	.registerDefaultCommands({

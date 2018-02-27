@@ -9,7 +9,7 @@ module.exports = class MDNCommand extends Command {
 		super(client, {
 			name: 'mdn',
 			aliases: ['mozilla-developer-network'],
-			group: 'other',
+			group: 'search',
 			memberName: 'mdn',
 			description: 'Searches MDN for your query.',
 			patterns: [/^(?:mdn,) (.+)/i],

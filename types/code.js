@@ -16,7 +16,7 @@ class CodeArgumentType extends ArgumentType {
 				const message = await msg.channel.messages.fetch(value);
 				value = message.content;
 			} catch (err) {
-				return null;
+				return { code: value, lang: null };
 			}
 		}
 		if (codeblock.test(value)) {
@@ -26,7 +26,7 @@ class CodeArgumentType extends ArgumentType {
 				lang: parsed[1] ? parsed[1].toLowerCase() : null
 			};
 		}
-		return null;
+		return { code: value, lang: null };
 	}
 }
 

@@ -4,13 +4,13 @@ const linter = new Linter();
 const rules = linter.getRules();
 const { MessageEmbed } = require('discord.js');
 
-module.exports = class EslintRuleCommand extends Command {
+module.exports = class LintRuleCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'eslint-rule',
-			aliases: ['rule'],
+			name: 'lint-rule',
+			aliases: ['eslint-rule', 'rule'],
 			group: 'other',
-			memberName: 'eslint-rule',
+			memberName: 'rule',
 			description: 'Gets information on an eslint rule.',
 			clientPermissions: ['EMBED_LINKS'],
 			args: [

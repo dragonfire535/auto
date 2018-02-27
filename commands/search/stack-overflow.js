@@ -8,7 +8,7 @@ module.exports = class StackOverflowCommand extends Command {
 		super(client, {
 			name: 'stack-overflow',
 			aliases: ['stack-exchange'],
-			group: 'other',
+			group: 'search',
 			memberName: 'stack-overflow',
 			description: 'Searches Stack Overflow for your query.',
 			clientPermissions: ['EMBED_LINKS'],
