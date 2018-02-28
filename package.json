@@ -1,6 +1,6 @@
 {
 	"name": "auto",
-	"version": "4.0.12",
+	"version": "4.0.13",
 	"description": "A code scanner Discord bot.",
 	"main": "Auto.js",
 	"scripts": {

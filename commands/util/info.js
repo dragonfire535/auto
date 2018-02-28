@@ -37,7 +37,7 @@ module.exports = class InfoCommand extends Command {
 			.addField('❯ Node Version',
 				process.version, true)
 			.addField('❯ Library',
-				'[discord.js](https://discord.js.org)[-commando](https://github.com/Gawdl3y/discord.js-commando)', true);
+				'[discord.js](https://discord.js.org)[-commando](https://github.com/discordjs/Commando)', true);
 		return msg.embed(embed);
 	}
 };
