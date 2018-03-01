@@ -63,9 +63,7 @@ module.exports = class LintJSONCommand extends Command {
 			}
 			return msg.reply(stripIndents`
 				${badMessages[Math.floor(Math.random() * badMessages.length)]}
-				\`\`\`
-				${err.name}: ${err.message}
-				\`\`\`
+				\`${err.name}: ${err.message}\`
 			`);
 		}
 	}
