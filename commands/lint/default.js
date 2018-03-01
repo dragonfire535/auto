@@ -43,20 +43,28 @@ module.exports = class LintDefaultCommand extends Command {
 		}
 		if (!errors.length) {
 			if (pattern) {
-				await msg.react(SUCCESS_EMOJI_ID);
-				return null;
+				try {
+					await msg.react(SUCCESS_EMOJI_ID);
+					return null;
+				} catch (err) {
+					return null;
+				}
 			}
 			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		}
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		if (pattern) {
-			await msg.react(FAILURE_EMOJI_ID);
-			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === FAILURE_EMOJI_ID;
-			const reactions = await msg.awaitReactions(filter, {
-				max: 1,
-				time: 30000
-			});
-			if (!reactions.size) return null;
+			try {
+				await msg.react(FAILURE_EMOJI_ID);
+				const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === FAILURE_EMOJI_ID;
+				const reactions = await msg.awaitReactions(filter, {
+					max: 1,
+					time: 30000
+				});
+				if (!reactions.size) return null;
+			} catch (err) {
+				return null;
+			}
 		}
 		return msg.reply(stripIndents`
 			${badMessages[Math.floor(Math.random() * badMessages.length)]}
