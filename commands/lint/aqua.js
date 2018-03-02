@@ -33,9 +33,7 @@ module.exports = class LintAquaCommand extends Command {
 			return msg.reply('Only `js` or `javascript` codeblocks should be linted with this command.');
 		}
 		const errors = linter.verify(code.code, config);
-		if (!errors.length) {
-			return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
-		}
+		if (!errors.length) return msg.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
 		return msg.reply(stripIndents`
 			${badMessages[Math.floor(Math.random() * badMessages.length)]}
