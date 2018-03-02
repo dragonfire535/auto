@@ -1,5 +1,7 @@
 const { Command } = require('discord.js-commando');
+const util = require('util');
 const vm = require('vm');
+const { stripIndents } = require('common-tags');
 
 module.exports = class SafeEvalCommand extends Command {
 	constructor(client) {
@@ -26,8 +28,15 @@ module.exports = class SafeEvalCommand extends Command {
 		}
 		try {
 			const ctx = vm.createContext(Object.create(null));
+			const hrStart = process.hrtime();
 			const evaled = vm.runInContext(code.code, ctx, { timeout: 1000 });
-			return msg.code('js', evaled);
+			const hrDiff = process.hrtime(hrStart);
+			return msg.reply(stripIndents`
+				*Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms.*
+				\`\`\`javascript
+				${util.inspect(evaled, { depth: 0 })}
+				\`\`\`
+			`);
 		} catch (err) {
 			return msg.reply(`Error while evaluating: \`${err.name}: ${err.message}\``);
 		}
