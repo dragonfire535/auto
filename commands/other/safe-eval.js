@@ -1,6 +1,5 @@
 const { Command } = require('discord.js-commando');
 const vm = require('vm');
-const ctx = vm.createContext(Object.create(null));
 
 module.exports = class SafeEvalCommand extends Command {
 	constructor(client) {
@@ -26,6 +25,7 @@ module.exports = class SafeEvalCommand extends Command {
 			return msg.reply('Only `js` or `javascript` codeblocks should be run with this command.');
 		}
 		try {
+			const ctx = vm.createContext(Object.create(null));
 			const evaled = vm.runInContext(code.code, ctx, { timeout: 1000 });
 			return msg.code('js', evaled);
 		} catch (err) {
