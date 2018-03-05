@@ -9,7 +9,7 @@ function is to scan JS and JSON codeblocks for syntax errors, as well as getting
 certain programming information from sites such as MDN and Stack Overflow. It is
 used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
-## Commands (27)
+## Commands (25)
 ### Utility:
 
 * **eval**: Executes JavaScript code.
@@ -49,8 +49,6 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 * **beautify**: Beautifies code with js-beautify.
 * **hastebin**: Posts code to hastebin.
 * **id**: Responds with a user's ID.
-* **strawpoll**: Generates a Strawpoll with the options you provide.
-* **toxicity**: Determines the toxicity of text.
 
 ## Licensing
 The bot is licensed under the GPL 3.0 license. See the file `LICENSE` for more
