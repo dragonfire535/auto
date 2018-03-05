@@ -9,7 +9,7 @@ function is to scan JS and JSON codeblocks for syntax errors, as well as getting
 certain programming information from sites such as MDN and Stack Overflow. It is
 used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
-## Commands (26)
+## Commands (27)
 ### Utility:
 
 * **eval**: Executes JavaScript code.
