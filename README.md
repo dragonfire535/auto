@@ -36,7 +36,6 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 * **beautify**: Beautifies code with js-beautify.
 * **hastebin**: Posts code to hastebin.
 
-
 ## Licensing
 The bot is licensed under the GPL 3.0 license. See the file `LICENSE` for more
 information. If you plan to use any part of this source code in your own bot, I
