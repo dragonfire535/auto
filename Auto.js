@@ -32,6 +32,7 @@ client.registry
 		['util', 'Utility'],
 		['lint', 'Lint'],
 		['search', 'Search'],
+		['text-edit', 'Text Manipulation'],
 		['other', 'Other']
 	])
 	.registerDefaultCommands({

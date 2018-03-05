@@ -9,10 +9,11 @@ function is to scan JS and JSON codeblocks for syntax errors, as well as getting
 certain programming information from sites such as MDN and Stack Overflow. It is
 used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
-## Commands (14)
+## Commands (26)
 ### Utility:
 
 * **eval**: Executes JavaScript code.
+* **donate**: Responds with Auto's donation links.
 * **help**: Displays a list of available commands, or detailed information for a specific command.
 * **info**: Responds with detailed bot information.
 * **ping**: Checks the bot's ping to the Discord server.
@@ -27,14 +28,29 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
 ### Search:
 
+* **github**: Responds with information on a GitHub repository.
+* **http-cat**: Responds with a cat for an HTTP status code.
 * **mdn**: Searches MDN for your query.
 * **npm**: Responds with information on an NPM package.
+* **spoopy-link**: Determines if a link is spoopy or not.
 * **stack-overflow**: Searches Stack Overflow for your query.
+
+### Text Manipulation:
+
+* **base64**: Converts text to Base64.
+* **hex**: Converts text to hex.
+* **md5**: Creates a hash of text with the MD5 algorithm.
+* **sha-256**: Creates a hash of text with the SHA-256 algorithm.
+* **shorten-url**: Creates a goo.gl short URL from another URL.
+* **url-encode**: Encodes text to URL-friendly characters.
 
 ### Other:
 
 * **beautify**: Beautifies code with js-beautify.
 * **hastebin**: Posts code to hastebin.
+* **id**: Responds with a user's ID.
+* **strawpoll**: Generates a Strawpoll with the options you provide.
+* **toxicity**: Determines the toxicity of text.
 
 ## Licensing
 The bot is licensed under the GPL 3.0 license. See the file `LICENSE` for more
