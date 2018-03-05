@@ -3,7 +3,7 @@
 
 **Further details**:
 
-- Xiao version:
+- Auto version:
 - Priority this issue should have – please be realistic and elaborate if possible:
 
 - [ ] I found this issue while self-hosting the bot.
