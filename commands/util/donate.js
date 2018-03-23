@@ -16,7 +16,7 @@ module.exports = class DonateCommand extends Command {
 	run(msg) {
 		return msg.say(stripIndents`
 			Contribute to Auto development!
-			<https://www.patreon.com/littlelimedragon>
+			<https://www.patreon.com/dragonfire535>
 			<https://paypal.me/dragonfire535>
 		`);
 	}
