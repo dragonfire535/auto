@@ -3,20 +3,20 @@ const { Linter } = require('eslint');
 const linter = new Linter();
 const { stripIndents } = require('common-tags');
 const { trimArray } = require('../../util/Util');
-const config = require('eslint-config-aqua');
+const config = require('eslint-config-amber');
 config.rules['eol-last'] = 'off';
 config.rules.indent = ['error', 4];
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
 
-module.exports = class LintAquaCommand extends Command {
+module.exports = class LintAmberCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'lint-aqua',
-			aliases: ['lint-config-aqua', 'eslint-aqua', 'eslint-config-aqua'],
+			name: 'lint-amber',
+			aliases: ['lint-config-amber', 'eslint-amber', 'eslint-config-amber'],
 			group: 'lint',
-			memberName: 'aqua',
-			description: 'Lints code with eslint-config-aqua rules.',
+			memberName: 'amber',
+			description: 'Lints code with eslint-config-amber rules.',
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{

@@ -1,6 +1,6 @@
 {
 	"name": "auto",
-	"version": "7.0.2",
+	"version": "8.0.0",
 	"description": "A code scanner Discord bot.",
 	"main": "Auto.js",
 	"scripts": {
@@ -36,7 +36,7 @@
 		"discord.js-commando": "github:discordjs/Commando",
 		"erlpack": "github:discordapp/erlpack",
 		"eslint": "^4.19.1",
-		"eslint-config-aqua": "^3.0.0",
+		"eslint-config-amber": "^1.0.0",
 		"js-beautify": "^1.7.5",
 		"snekfetch": "^3.6.4",
 		"turndown": "^4.0.1",
@@ -47,16 +47,7 @@
 		"eslint-plugin-json": "^1.2.0"
 	},
 	"eslintConfig": {
-		"extends": "aqua",
-		"plugins": [
-			"json"
-		],
-		"rules": {
-			"camelcase": "off",
-			"id-length": "off",
-			"no-await-in-loop": "off",
-			"no-console": "off",
-			"prefer-const": "error"
-		}
+		"extends": "amber",
+		"plugins": ["json"]
 	}
 }

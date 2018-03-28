@@ -21,7 +21,7 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
 ### Lint:
 
-* **lint-aqua**: Lints code with eslint-config-aqua rules.
+* **lint-amber**: Lints code with eslint-config-amber rules.
 * **lint-default**: Lints code with the recommended rules.
 * **lint-json**: Lints JSON.
 * **lint-rule**: Gets information on an eslint rule.
