@@ -48,6 +48,8 @@
 	},
 	"eslintConfig": {
 		"extends": "amber",
-		"plugins": ["json"]
+		"plugins": [
+			"json"
+		]
 	}
 }
