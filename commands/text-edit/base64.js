@@ -33,6 +33,8 @@ module.exports = class Base64Command extends Command {
 	}
 
 	run(msg, { mode, text }) {
-		return msg.say(base64(text, mode));
+		const converted = base64(text, mode);
+		if (!converted) return msg.reply('That is not valid Base64.');
+		return msg.say(converted);
 	}
 };
