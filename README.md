@@ -1,4 +1,8 @@
 # Auto
+[![Build Status](https://travis-ci.org/dragonfire535/auto.svg?branch=master)](https://travis-ci.org/dragonfire535/auto)
+[![Discord Server](https://discordapp.com/api/guilds/252317073814978561/embed.png)](https://discord.gg/sbMe32W)
+[![Donate on Patreon](https://img.shields.io/badge/patreon-donate-orange.svg)](https://www.patreon.com/dragonfire535)
+[![Donate on PayPal](https://img.shields.io/badge/paypal-donate-blue.svg)](https://www.paypal.me/dragonfire535)
 
 > Note: The bot is not available for invite.
 
@@ -9,7 +13,7 @@ function is to scan JS and JSON codeblocks for syntax errors, as well as getting
 certain programming information from sites such as MDN and Stack Overflow. It is
 used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
-## Commands (25)
+## Commands (26)
 ### Utility:
 
 * **eval**: Executes JavaScript code.
@@ -48,6 +52,7 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
 * **beautify**: Beautifies code with js-beautify.
 * **hastebin**: Posts code to hastebin.
+* **hi**: Hello.
 * **id**: Responds with a user's ID.
 
 ## Licensing
