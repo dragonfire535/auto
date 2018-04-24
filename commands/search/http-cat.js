@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const snekfetch = require('snekfetch');
 
-module.exports = class HTTPCatCommand extends Command {
+module.exports = class HttpCatCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'http-cat',

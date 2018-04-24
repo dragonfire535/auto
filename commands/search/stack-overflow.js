@@ -44,18 +44,12 @@ module.exports = class StackOverflowCommand extends Command {
 				.setAuthor('Stack Overflow', 'https://i.imgur.com/P2jAgE3.png', 'https://stackoverflow.com/')
 				.setURL(data.link)
 				.setTitle(data.title)
-				.addField('❯ ID',
-					data.question_id, true)
-				.addField('❯ Asker',
-					`[${data.owner.display_name}](${data.owner.link})`, true)
-				.addField('❯ Views',
-					data.view_count, true)
-				.addField('❯ Score',
-					data.score, true)
-				.addField('❯ Created',
-					new Date(data.creation_date * 1000).toDateString(), true)
-				.addField('❯ Last Activity',
-					new Date(data.last_activity_date * 1000).toDateString(), true);
+				.addField('❯ ID', data.question_id, true)
+				.addField('❯ Asker', `[${data.owner.display_name}](${data.owner.link})`, true)
+				.addField('❯ Views', data.view_count, true)
+				.addField('❯ Score', data.score, true)
+				.addField('❯ Creation Date', new Date(data.creation_date * 1000).toDateString(), true)
+				.addField('❯ Last Activity', new Date(data.last_activity_date * 1000).toDateString(), true);
 			return msg.embed(embed);
 		} catch (err) {
 			return msg.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);

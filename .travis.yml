@@ -1,5 +1,5 @@
 sudo: false
 language: node_js
 node_js:
-  - '9'
+  - '10'
 install: npm i -g eslint eslint-config-amber eslint-plugin-json

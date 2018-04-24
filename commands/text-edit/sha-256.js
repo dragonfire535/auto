@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const crypto = require('crypto');
+const { hash } = require('../../util/Util');
 
 module.exports = class SHA256Command extends Command {
 	constructor(client) {
@@ -20,6 +20,6 @@ module.exports = class SHA256Command extends Command {
 	}
 
 	run(msg, { text }) {
-		return msg.say(crypto.createHash('sha256').update(text).digest('hex'));
+		return msg.say(hash(text, 'sha256'));
 	}
 };

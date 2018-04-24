@@ -37,25 +37,17 @@ module.exports = class NPMCommand extends Command {
 				.setTitle(body.name)
 				.setURL(`https://www.npmjs.com/package/${pkg}`)
 				.setDescription(body.description || 'No description.')
-				.addField('❯ Version',
-					body['dist-tags'].latest, true)
-				.addField('❯ License',
-					body.license || 'None', true)
-				.addField('❯ Author',
-					body.author ? body.author.name : 'Unknown', true)
-				.addField('❯ Creation Date',
-					new Date(body.time.created).toDateString(), true)
-				.addField('❯ Modification Date',
-					new Date(body.time.modified).toDateString(), true)
-				.addField('❯ Main File',
-					version.main || 'index.js', true)
-				.addField('❯ Dependencies',
-					dependencies && dependencies.length ? dependencies.join(', ') : 'None')
-				.addField('❯ Maintainers',
-					maintainers.join(', '));
+				.addField('❯ Version', body['dist-tags'].latest, true)
+				.addField('❯ License', body.license || 'None', true)
+				.addField('❯ Author', body.author ? body.author.name : '???', true)
+				.addField('❯ Creation Date', new Date(body.time.created).toDateString(), true)
+				.addField('❯ Modification Date', new Date(body.time.modified).toDateString(), true)
+				.addField('❯ Main File', version.main || 'index.js', true)
+				.addField('❯ Dependencies', dependencies && dependencies.length ? dependencies.join(', ') : 'None')
+				.addField('❯ Maintainers', maintainers.join(', '));
 			return msg.embed(embed);
 		} catch (err) {
-			if (err.status === 404) return msg.say('Could not find any results.');
+			if (err.statusCode === 404) return msg.say('Could not find any results.');
 			return msg.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
 		}
 	}

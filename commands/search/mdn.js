@@ -2,7 +2,6 @@ const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const snekfetch = require('snekfetch');
 const Turndown = require('turndown');
-const root = 'https://developer.mozilla.org';
 
 module.exports = class MDNCommand extends Command {
 	constructor(client) {
@@ -35,12 +34,12 @@ module.exports = class MDNCommand extends Command {
 			const turndown = new Turndown();
 			turndown.addRule('hyperlink', {
 				filter: 'a',
-				replacement: (text, node) => `[${text}](${root}${node.href})`
+				replacement: (text, node) => `[${text}](https://developer.mozilla.org${node.href})`
 			});
 			const embed = new MessageEmbed()
 				.setColor(0x066FAD)
 				.setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png', 'https://developer.mozilla.org/')
-				.setURL(`${root}${body.URL}`)
+				.setURL(`https://developer.mozilla.org${body.URL}`)
 				.setTitle(body.Title)
 				.setDescription(turndown.turndown(body.Summary));
 			return msg.embed(embed);

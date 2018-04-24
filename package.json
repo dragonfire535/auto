@@ -1,6 +1,6 @@
 {
 	"name": "auto",
-	"version": "8.1.0",
+	"version": "8.1.1",
 	"description": "A code scanner Discord bot.",
 	"main": "Auto.js",
 	"scripts": {
@@ -38,7 +38,7 @@
 		"eslint": "^4.19.1",
 		"eslint-config-amber": "^1.0.1",
 		"js-beautify": "^1.7.5",
-		"snekfetch": "^3.6.4",
+		"snekfetch": "^4.0.0",
 		"turndown": "^4.0.1",
 		"uws": "^9.148.0",
 		"zlib-sync": "^0.1.4"
