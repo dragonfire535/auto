@@ -39,7 +39,7 @@
 		"eslint-config-amber": "^1.0.1",
 		"js-beautify": "^1.7.5",
 		"snekfetch": "^4.0.0",
-		"turndown": "^4.0.1",
+		"turndown": "^4.0.2",
 		"uws": "^9.148.0",
 		"zlib-sync": "^0.1.4"
 	},
