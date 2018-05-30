@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-commando');
+const Command = require('../../structures/Command');
 const { Linter } = require('eslint');
 const linter = new Linter();
 const { stripIndents } = require('common-tags');

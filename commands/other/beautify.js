@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-commando');
+const Command = require('../../structures/Command');
 const { js_beautify: beautify } = require('js-beautify');
 
 module.exports = class BeautifyCommand extends Command {

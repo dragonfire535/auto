@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-commando');
+const Command = require('../../structures/Command');
 const { hash } = require('../../util/Util');
 
 module.exports = class MD5Command extends Command {

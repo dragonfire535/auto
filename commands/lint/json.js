@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-commando');
+const Command = require('../../structures/Command');
 const { stripIndents } = require('common-tags');
 const goodMessages = require('../../assets/json/good-messages');
 const badMessages = require('../../assets/json/bad-messages');
