@@ -1,6 +1,6 @@
 const Command = require('../../structures/Command');
 const { MessageEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const { trimArray } = require('../../util/Util');
 
 module.exports = class NPMCommand extends Command {
@@ -26,7 +26,7 @@ module.exports = class NPMCommand extends Command {
 
 	async run(msg, { pkg }) {
 		try {
-			const { body } = await snekfetch.get(`https://registry.npmjs.com/${pkg}`);
+			const { body } = await request.get(`https://registry.npmjs.com/${pkg}`);
 			if (body.time.unpublished) return msg.say('This package no longer exists.');
 			const version = body.versions[body['dist-tags'].latest];
 			const maintainers = trimArray(body.maintainers.map(user => user.name));

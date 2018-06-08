@@ -1,5 +1,5 @@
 const Command = require('../../structures/Command');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 
 module.exports = class HastebinCommand extends Command {
 	constructor(client) {
@@ -22,7 +22,7 @@ module.exports = class HastebinCommand extends Command {
 
 	async run(msg, { code }) {
 		try {
-			const { body } = await snekfetch
+			const { body } = await request
 				.post('https://hastebin.com/documents')
 				.send(code.code);
 			return msg.reply(`https://hastebin.com/${body.key}.${code.lang || 'js'}`);

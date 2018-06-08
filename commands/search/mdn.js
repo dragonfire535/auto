@@ -1,6 +1,6 @@
 const Command = require('../../structures/Command');
 const { MessageEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const Turndown = require('turndown');
 
 module.exports = class MDNCommand extends Command {
@@ -27,7 +27,7 @@ module.exports = class MDNCommand extends Command {
 	async run(msg, { query }, pattern) {
 		if (pattern) [, query] = msg.patternMatches;
 		try {
-			const { body } = await snekfetch
+			const { body } = await request
 				.get('https://mdn.topkek.pw/search')
 				.query({ q: query });
 			if (!body.URL || !body.Title || !body.Summary) return msg.say('Could not find any results.');

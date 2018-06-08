@@ -1,6 +1,6 @@
 const Command = require('../../structures/Command');
 const { MessageEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const { STACKOVERFLOW_KEY } = process.env;
 
 module.exports = class StackOverflowCommand extends Command {
@@ -24,7 +24,7 @@ module.exports = class StackOverflowCommand extends Command {
 
 	async run(msg, { query }) {
 		try {
-			const { body } = await snekfetch
+			const { body } = await request
 				.get('http://api.stackexchange.com/2.2/search/advanced')
 				.query({
 					page: 1,
