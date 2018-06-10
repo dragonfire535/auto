@@ -1,6 +1,6 @@
 const Command = require('../../structures/Command');
 const { MessageEmbed } = require('discord.js');
-const request = require('superagent');
+const request = require('node-superfetch');
 const Turndown = require('turndown');
 
 module.exports = class MDNCommand extends Command {
