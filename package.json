@@ -40,7 +40,7 @@
 		"js-beautify": "^1.7.5",
 		"node-superfetch": "^0.1.2",
 		"turndown": "^4.0.2",
-		"uws": "^10.148.0",
+		"uws": "^10.148.1",
 		"zlib-sync": "^0.1.4"
 	},
 	"devDependencies": {
