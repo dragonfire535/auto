@@ -21,7 +21,8 @@ module.exports = class HttpCatCommand extends Command {
 
 	async run(msg, { code }) {
 		try {
-			const { body } = await request.get(`https://http.cat/${code}.jpg`);
+			const { body, headers } = await request.get(`https://http.cat/${code}.jpg`);
+			if (headers['content-type'] === 'text/html') return msg.say('Could not find any results.');
 			return msg.say({ files: [{ attachment: body, name: `${code}.jpg` }] });
 		} catch (err) {
 			if (err.status === 404) return msg.say('Could not find any results.');
