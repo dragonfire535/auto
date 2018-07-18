@@ -22,12 +22,12 @@ module.exports = class ChangelogCommand extends Command {
 			.set({ Authorization: `Basic ${base64(`${GITHUB_USERNAME}:${GITHUB_PASSWORD}`)}` });
 		const commits = body.slice(0, 10);
 		const embed = new MessageEmbed()
-			.setTitle('[xiao:master] Latest 10 commits')
+			.setTitle(`[${AUTO_GITHUB_REPO_NAME}:master] Latest 10 commits`)
 			.setColor(0x7289DA)
 			.setURL(`https://github.com/${AUTO_GITHUB_REPO_USERNAME}/${AUTO_GITHUB_REPO_NAME}/commits/master`)
 			.setDescription(commits.map(commit => {
 				const hash = `[\`${commit.sha.slice(0, 7)}\`](${commit.html_url})`;
-				return `${hash} ${shorten(commit.commit.message, 50)} - ${commit.author.login}`;
+				return `${hash} ${shorten(commit.commit.message.split('\n')[0], 50)} - ${commit.author.login}`;
 			}).join('\n'));
 		return msg.embed(embed);
 	}
