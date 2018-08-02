@@ -16,10 +16,6 @@
 		"type": "WATCHING"
 	},
 	{
-		"text": "you eat pant",
-		"type": "WATCHING"
-	},
-	{
 		"text": "ESLint fail",
 		"type": "WATCHING"
 	},
