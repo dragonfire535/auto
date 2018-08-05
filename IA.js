@@ -28,8 +28,6 @@ client.registry
 	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
-client.on('unknownCommand', msg => msg.reply('Invalid message!'));
-
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
 	client.setInterval(() => {
