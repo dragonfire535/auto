@@ -18,6 +18,7 @@ client.registry
 		['util', 'Utility'],
 		['lint', 'Lint'],
 		['search', 'Search'],
+		['games', 'Games'],
 		['other', 'Other']
 	])
 	.registerDefaultCommands({
