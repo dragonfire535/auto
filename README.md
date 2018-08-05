@@ -13,7 +13,7 @@ function is to scan JS and JSON codeblocks for syntax errors, as well as getting
 certain programming information from sites such as MDN and Stack Overflow. It is
 used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
-## Commands (21)
+## Commands (23)
 ### Utility:
 
 * **eval**: Executes JavaScript code.
@@ -40,6 +40,10 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 * **mdn**: Searches MDN for your query.
 * **npm**: Responds with information on an NPM package.
 * **stack-overflow**: Searches Stack Overflow for your query.
+
+### Games:
+* **cards-against-humanity**: Compete to see who can come up with the best card to fill in the blank.
+* **hunger-games**: Simulate a Hunger Games match with up to 24 tributes.
 
 ### Other:
 
