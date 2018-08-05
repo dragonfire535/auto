@@ -13,7 +13,7 @@ function is to scan JS and JSON codeblocks for syntax errors, as well as getting
 certain programming information from sites such as MDN and Stack Overflow. It is
 used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
-## Commands (20)
+## Commands (21)
 ### Utility:
 
 * **eval**: Executes JavaScript code.
@@ -45,6 +45,7 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
 * **beautify**: Beautifies code with js-beautify.
 * **hastebin**: Posts code to hastebin.
+* **hi**: Hello.
 
 ## Licensing
 The bot is licensed under the GPL 3.0 license. See the file `LICENSE` for more

@@ -10,20 +10,6 @@ const client = new CommandoClient({
 	disabledEvents: ['TYPING_START']
 });
 const activities = require('./assets/json/activity');
-const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
-const runLint = (msg, updated = false) => {
-	if (msg.channel.type !== 'text' || msg.author.bot) return;
-	if (!codeblock.test(msg.content)) return;
-	if (msg.channel.topic && msg.channel.topic.includes('<auto:no-scan>')) return;
-	if (!msg.channel.permissionsFor(msg.client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return;
-	const parsed = codeblock.exec(msg.content);
-	const code = {
-		code: parsed[2],
-		lang: parsed[1] ? parsed[1].toLowerCase() : null
-	};
-	if (code.lang === 'json') msg.client.registry.resolveCommand('lint:json').run(msg, { code }, true, updated);
-	else msg.client.registry.resolveCommand('lint:default').run(msg, { code }, true, updated);
-};
 
 client.registry
 	.registerDefaultTypes()
@@ -41,10 +27,6 @@ client.registry
 		commandState: false
 	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
-
-client.on('message', runLint);
-
-client.on('messageUpdate', (oldMsg, msg) => runLint(msg, true));
 
 client.on('unknownCommand', msg => msg.reply('Invalid message!'));
 
