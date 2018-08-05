@@ -10,6 +10,7 @@ module.exports = class DiscordJSDocsCommand extends Command {
 			group: 'search',
 			memberName: 'discord-js-docs',
 			description: 'Searches the Discord.js docs for your query.',
+			patterns: [/^(?:docs,) (.+)/i],
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{
@@ -22,7 +23,8 @@ module.exports = class DiscordJSDocsCommand extends Command {
 		});
 	}
 
-	async run(msg, { query }) {
+	async run(msg, { query }, pattern) {
+		if (pattern) [, query] = msg.patternMatches;
 		let project = 'main';
 		let branch = query.split(' ');
 		if (branches.includes(branch[0])) {
