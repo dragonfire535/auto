@@ -2,6 +2,17 @@ const yes = ['yes', 'y', 'ye', 'yeah', 'yup', 'yea'];
 const no = ['no', 'n', 'nah', 'nope'];
 
 class Util {
+	static shuffle(array) {
+		const arr = array.slice(0);
+		for (let i = arr.length - 1; i >= 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			const temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+		}
+		return arr;
+	}
+
 	static list(arr, conj = 'and') {
 		const len = arr.length;
 		return `${arr.slice(0, -1).join(', ')}${len > 1 ? `${len > 2 ? ',' : ''} ${conj} ` : ''}${arr.slice(-1)}`;
