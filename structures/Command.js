@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 
-class AutoCommand extends Command {
+class IACommand extends Command {
 	constructor(client, info) {
 		super(client, info);
 
@@ -9,4 +9,4 @@ class AutoCommand extends Command {
 	}
 }
 
-module.exports = AutoCommand;
+module.exports = IACommand;

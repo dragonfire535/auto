@@ -8,7 +8,7 @@ module.exports = class InviteCommand extends Command {
 			aliases: ['join'],
 			group: 'util',
 			memberName: 'invite',
-			description: 'Responds with Auto\'s invite links.',
+			description: 'Responds with IA\'s invite links.',
 			guarded: true
 		});
 	}

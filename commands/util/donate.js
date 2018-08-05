@@ -8,14 +8,14 @@ module.exports = class DonateCommand extends Command {
 			aliases: ['patreon', 'paypal'],
 			group: 'util',
 			memberName: 'donate',
-			description: 'Responds with Auto\'s donation links.',
+			description: 'Responds with IA\'s donation links.',
 			guarded: true
 		});
 	}
 
 	run(msg) {
 		return msg.say(stripIndents`
-			Contribute to Auto development!
+			Contribute to IA development!
 			<https://www.patreon.com/dragonfire535>
 			<https://paypal.me/dragonfire535>
 		`);

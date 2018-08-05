@@ -1,8 +1,8 @@
-const { AUTO_TOKEN, AUTO_PREFIX, OWNERS, INVITE } = process.env;
+const { IA_TOKEN, IA_PREFIX, OWNERS, INVITE } = process.env;
 const path = require('path');
 const { CommandoClient } = require('discord.js-commando');
 const client = new CommandoClient({
-	commandPrefix: AUTO_PREFIX,
+	commandPrefix: IA_PREFIX,
 	owner: OWNERS.split(','),
 	invite: INVITE,
 	disableEveryone: true,
@@ -51,7 +51,7 @@ client.on('warn', err => console.warn('[WARNING]', err));
 
 client.on('commandError', (command, err) => console.error('[COMMAND ERROR]', command.name, err));
 
-client.login(AUTO_TOKEN);
+client.login(IA_TOKEN);
 
 process.on('unhandledRejection', err => {
 	console.error('[FATAL] Unhandled Promise Rejection.', err);

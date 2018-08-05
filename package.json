@@ -1,16 +1,16 @@
 {
-	"name": "auto",
+	"name": "ia",
 	"version": "13.0.0",
 	"description": "A code scanner Discord bot.",
-	"main": "Auto.js",
+	"main": "IA.js",
 	"scripts": {
 		"test": "npm run lint",
 		"lint": "eslint . --ext .js --ext .json",
-		"start": "node Auto.js"
+		"start": "node IA.js"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/dragonfire535/auto.git"
+		"url": "git+https://github.com/dragonfire535/ia.git"
 	},
 	"keywords": [
 		"bot",
@@ -24,9 +24,9 @@
 	"author": "dragonfire535 <danielbodendahl@gmail.com>",
 	"license": "GPL-3.0",
 	"bugs": {
-		"url": "https://github.com/dragonfire535/auto/issues"
+		"url": "https://github.com/dragonfire535/ia/issues"
 	},
-	"homepage": "https://github.com/dragonfire535/auto#readme",
+	"homepage": "https://github.com/dragonfire535/ia#readme",
 	"engines": {
 		"node": ">=10.1.0"
 	},
