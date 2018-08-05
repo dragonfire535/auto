@@ -20,8 +20,20 @@
 		"type": "WATCHING"
 	},
 	{
-		"text": "with my hubcaps",
-		"type": "PLAYING"
+		"text": "a song about bad code",
+		"type": "LISTENING"
+	},
+	{
+		"text": "a song about good code",
+		"type": "LISTENING"
+	},
+	{
+		"text": "a song about decent code",
+		"type": "LISTENING"
+	},
+	{
+		"text": "you eat pant",
+		"type": "WATCHING"
 	},
 	{
 		"text": "noobs fail at code",
