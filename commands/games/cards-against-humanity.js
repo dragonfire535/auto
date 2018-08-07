@@ -22,7 +22,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 						start: 'What amount of points should determine the winner?',
 						retry: 'You provided an invalid points maximum. Please try again.'
 					},
-					type: maxPts => Argument.range('integer', 1, 20, true)
+					type: Argument.range('integer', 1, 20, true)
 				}
 			]
 		});

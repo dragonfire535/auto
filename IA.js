@@ -27,7 +27,9 @@ client.on('error', err => console.error('[ERROR]', err));
 
 client.on('warn', err => console.warn('[WARNING]', err));
 
-client.commandHandler.on('error', (err, msg, command) => console.error('[COMMAND ERROR]', command ? command.id : 'None', err));
+client.commandHandler.on('error', (err, msg, command) => {
+	console.error('[COMMAND ERROR]', command ? command.id : 'None', err);
+});
 
 client.login(IA_TOKEN);
 
