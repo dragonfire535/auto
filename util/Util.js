@@ -1,5 +1,6 @@
 const yes = ['yes', 'y', 'ye', 'yeah', 'yup', 'yea'];
 const no = ['no', 'n', 'nah', 'nope'];
+const { SUCCESS_EMOJI_ID, FAILURE_EMOJI_ID } = process.env;
 
 class Util {
 	static shuffle(array) {
@@ -47,12 +48,19 @@ class Util {
 	static async awaitPlayers(msg, max, min, { text = 'join game', time = 30000 } = {}) {
 		const joined = [];
 		joined.push(msg.author.id);
-		const filter = res => {
+		const filter = async res => {
 			if (msg.author.bot) return false;
 			if (joined.includes(res.author.id)) return false;
 			if (res.content.toLowerCase() !== text.toLowerCase()) return false;
 			joined.push(res.author.id);
-			return true;
+			try {
+				await msg.say('Hi! Just testing that DMs work, pay this no mind.');
+				await msg.react(SUCCESS_EMOJI_ID || '✅');
+				return true;
+			} catch (err) {
+				await msg.react(FAILURE_EMOJI_ID || '❌');
+				return false;
+			}
 		};
 		const verify = await msg.channel.awaitMessages(filter, { max, time });
 		verify.set(msg.id, msg);

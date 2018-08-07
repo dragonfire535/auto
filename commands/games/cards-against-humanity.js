@@ -38,7 +38,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				this.playing.delete(msg.channel.id);
 				return msg.say('Game could not be started...');
 			}
-			const players = await this.generatePlayers(awaitedPlayers);
+			const players = this.generatePlayers(awaitedPlayers);
 			const czars = Array.from(players.values());
 			let winner = null;
 			while (!winner) {
@@ -138,7 +138,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 		}
 	}
 
-	async generatePlayers(list) {
+	generatePlayers(list) {
 		const players = new Collection();
 		for (const user of list) {
 			const cards = new Set();
@@ -152,7 +152,6 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				points: 0,
 				hand: cards
 			});
-			await user.send('Hi! Waiting for your turn to start...');
 		}
 		return players;
 	}
