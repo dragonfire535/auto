@@ -29,10 +29,10 @@ module.exports = class DiscordJSDocsCommand extends Command {
 		if (pattern) [, branch, query] = msg.patternMatches;
 		else branch = query.split(' ');
 		let project = 'main';
-		if (branches.includes(branch.length ? branch[0] : branch)) {
+		if (!pattern && branches.includes(branch[0])) {
 			query = branch.slice(1).join(' ');
 			branch = branch[0];
-		} else {
+		} else if (!pattern) {
 			branch = 'stable';
 		}
 		if (branch === 'commando' || branch === 'rpc') {
