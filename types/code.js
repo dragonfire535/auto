@@ -1,33 +1,21 @@
-const { ArgumentType } = require('discord.js-commando');
 const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
 
-class CodeArgumentType extends ArgumentType {
-	constructor(client) {
-		super(client, 'code');
-	}
-
-	validate(value) {
-		return Boolean(value);
-	}
-
-	async parse(value, msg) {
-		if (/^[0-9]+$/.test(value)) {
-			try {
-				const message = await msg.channel.messages.fetch(value);
-				value = message.content;
-			} catch (err) {
-				return { code: value, lang: null };
-			}
+module.exports = async (phrase, msg) => {
+	if (!phrase) return null;
+	if (/^[0-9]+$/.test(phrase)) {
+		try {
+			const message = await msg.channel.messages.fetch(phrase);
+			phrase = message.content;
+		} catch (err) {
+			return { code: phrase, lang: null };
 		}
-		if (codeblock.test(value)) {
-			const parsed = codeblock.exec(value);
-			return {
-				code: parsed[2],
-				lang: parsed[1] ? parsed[1].toLowerCase() : null
-			};
-		}
-		return { code: value, lang: null };
 	}
-}
-
-module.exports = CodeArgumentType;
+	if (codeblock.test(phrase)) {
+		const parsed = codeblock.exec(phrase);
+		return {
+			code: parsed[2],
+			lang: parsed[1] ? parsed[1].toLowerCase() : null
+		};
+	}
+	return { code: phrase, lang: null };
+};

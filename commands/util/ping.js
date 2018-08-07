@@ -1,23 +1,22 @@
-const Command = require('../../structures/Command');
+const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 
 module.exports = class PingCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'ping',
-			aliases: ['pong', 'ping-pong'],
-			group: 'util',
-			memberName: 'ping',
-			description: 'Checks the bot\'s ping to the Discord server.',
-			guarded: true
+	constructor() {
+		super('ping', {
+			aliases: ['ping', 'pong', 'ping-pong'],
+			category: 'util',
+			description: {
+				content: 'Checks the bot\'s ping to the Discord server.'
+			}
 		});
 	}
 
-	async run(msg) {
-		const message = await msg.say('Pinging...');
+	async exec(msg) {
+		const message = await msg.util.send('Pinging...');
 		const ping = Math.round(message.createdTimestamp - msg.createdTimestamp);
 		return message.edit(stripIndents`
-			🏓 P${'o'.repeat(Math.ceil(ping / 100))}ng! \`${ping}ms\`
+			🏓 P${'o'.repeat(Math.ceil(Math.min(ping / 100, 1800)))}ng! \`${ping}ms\`
 			Heartbeat: \`${Math.round(this.client.ping)}ms\`
 		`);
 	}

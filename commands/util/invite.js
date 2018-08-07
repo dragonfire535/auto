@@ -1,22 +1,22 @@
-const Command = require('../../structures/Command');
+const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
+const { INVITE } = process.env;
 
 module.exports = class InviteCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'invite',
-			aliases: ['join'],
-			group: 'util',
-			memberName: 'invite',
-			description: 'Responds with IA\'s invite links.',
-			guarded: true
+	constructor() {
+		super('invite', {
+			aliases: ['invite', 'join'],
+			category: 'util',
+			description: {
+				content: 'Responds with IA\'s invite links.'
+			}
 		});
 	}
 
-	run(msg) {
-		return msg.say(stripIndents`
+	exec(msg) {
+		return msg.util.send(stripIndents`
 			You cannot invite me to your server, but you can join my home server to use me:
-			${this.client.options.invite || 'Coming soon...'}
+			${INVITE || 'Coming soon...'}
 		`);
 	}
 };

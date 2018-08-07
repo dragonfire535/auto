@@ -1,36 +1,41 @@
-const Command = require('../../structures/Command');
+const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const { shorten, base64 } = require('../../util/Util');
 const { GITHUB_USERNAME, GITHUB_PASSWORD } = process.env;
 
 module.exports = class GithubCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'github',
-			aliases: ['github-repository', 'github-repo', 'git-repo'],
-			group: 'search',
-			memberName: 'github',
-			description: 'Responds with information on a GitHub repository.',
+	constructor() {
+		super('github', {
+			aliases: ['github', 'github-repository', 'github-repo', 'git-repo'],
+			category: 'search',
+			description: {
+				content: 'Responds with information on a GitHub repository.',
+				usage: '<author> <repository>'
+			},
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{
-					key: 'author',
-					prompt: 'Who is the author of the repository?',
-					type: 'string',
-					parse: author => encodeURIComponent(author)
+					id: 'author',
+					prompt: {
+						start: 'Who is the author of the repository?',
+						retry: 'You provided an invalid author. Please try again.'
+					},
+					type: author => encodeURIComponent(author)
 				},
 				{
-					key: 'repository',
-					prompt: 'What is the name of the repository?',
-					type: 'string',
-					parse: repository => encodeURIComponent(repository)
+					id: 'repository',
+					prompt: {
+						start: 'What is the name of the repository?',
+						retry: 'You provided an invalid repository. Please try again.'
+					},
+					type: repository => encodeURIComponent(repository)
 				}
 			]
 		});
 	}
 
-	async run(msg, { author, repository }) {
+	async exec(msg, { author, repository }) {
 		try {
 			const { body } = await request
 				.get(`https://api.github.com/repos/${author}/${repository}`)
@@ -48,10 +53,10 @@ module.exports = class GithubCommand extends Command {
 				.addField('❯ Language', body.language || '???', true)
 				.addField('❯ Creation Date', new Date(body.created_at).toDateString(), true)
 				.addField('❯ Modification Date', new Date(body.updated_at).toDateString(), true);
-			return msg.embed(embed);
+			return msg.util.send({ embed });
 		} catch (err) {
-			if (err.status === 404) return msg.say('Could not find any results.');
-			return msg.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+			if (err.status === 404) return msg.util.send('Could not find any results.');
+			return msg.util.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
 		}
 	}
 };

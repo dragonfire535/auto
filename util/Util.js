@@ -39,6 +39,14 @@ class Util {
 		return arr;
 	}
 
+	static firstUpperCase(text) {
+		return `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
+	}
+
+	static escapeRegex(str) {
+		return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+	}
+
 	static base64(text, mode = 'encode') {
 		if (mode === 'encode') return Buffer.from(text).toString('base64');
 		if (mode === 'decode') return Buffer.from(text, 'base64').toString('utf8') || null;

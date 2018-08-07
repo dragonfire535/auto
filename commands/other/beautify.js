@@ -1,25 +1,36 @@
-const Command = require('../../structures/Command');
+const { Command } = require('discord-akairo');
 const { js_beautify: beautify } = require('js-beautify');
+const { stripIndents } = require('common-tags');
 
 module.exports = class BeautifyCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'beautify',
-			group: 'other',
-			memberName: 'beautify',
-			description: 'Beautifies code with js-beautify.',
+	constructor() {
+		super('beautify', {
+			aliases: ['beautify', 'js-beautify'],
+			category: 'other',
+			description: {
+				content: 'Beautifies code with js-beautify.',
+				usage: '<code>'
+			},
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{
-					key: 'code',
-					prompt: 'What code do you want to beautify?',
+					id: 'code',
+					prompt: {
+						start: 'What code do you want to beautify?',
+						retry: 'You provided invalid code. Please try again.'
+					},
+					match: 'content',
 					type: 'code'
 				}
 			]
 		});
 	}
 
-	run(msg, { code }) {
-		return msg.code(code.lang || 'js', beautify(code.code));
+	exec(msg, { code }) {
+		return msg.util.send(stripIndents`
+			\`\`\`${code.lang || 'js'}
+			${beautify(code.code)}
+			\`\`\`
+		`);
 	}
 };

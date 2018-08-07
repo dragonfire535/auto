@@ -1,28 +1,33 @@
-const Command = require('../../structures/Command');
+const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const request = require('node-superfetch');
 const { STACKOVERFLOW_KEY } = process.env;
 
 module.exports = class StackOverflowCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'stack-overflow',
-			aliases: ['stack-exchange'],
-			group: 'search',
-			memberName: 'stack-overflow',
-			description: 'Searches Stack Overflow for your query.',
+	constructor() {
+		super('stack-overflow', {
+			aliases: ['stack-overflow', 'stack-exchange'],
+			category: 'search',
+			description: {
+				content: 'Searches Stack Overflow for your query.',
+				usage: '<query>'
+			},
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{
-					key: 'query',
-					prompt: 'What question would you like to search for?',
+					id: 'query',
+					prompt: {
+						start: 'What question would you like to search for?',
+						retry: 'You provided an invalid query. Please try again.'
+					},
+					match: 'content',
 					type: 'string'
 				}
 			]
 		});
 	}
 
-	async run(msg, { query }) {
+	async exec(msg, { query }) {
 		try {
 			const { body } = await request
 				.get('http://api.stackexchange.com/2.2/search/advanced')
@@ -37,7 +42,7 @@ module.exports = class StackOverflowCommand extends Command {
 					site: 'stackoverflow',
 					key: STACKOVERFLOW_KEY
 				});
-			if (!body.items.length) return msg.say('Could not find any results.');
+			if (!body.items.length) return msg.util.send('Could not find any results.');
 			const data = body.items[0];
 			const embed = new MessageEmbed()
 				.setColor(0xF48023)
@@ -50,9 +55,9 @@ module.exports = class StackOverflowCommand extends Command {
 				.addField('❯ Score', data.score, true)
 				.addField('❯ Creation Date', new Date(data.creation_date * 1000).toDateString(), true)
 				.addField('❯ Last Activity', new Date(data.last_activity_date * 1000).toDateString(), true);
-			return msg.embed(embed);
+			return msg.util.send({ embed });
 		} catch (err) {
-			return msg.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+			return msg.util.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
 		}
 	}
 };

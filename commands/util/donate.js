@@ -1,20 +1,19 @@
-const Command = require('../../structures/Command');
+const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 
 module.exports = class DonateCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'donate',
-			aliases: ['patreon', 'paypal'],
-			group: 'util',
-			memberName: 'donate',
-			description: 'Responds with IA\'s donation links.',
-			guarded: true
+	constructor() {
+		super('donate', {
+			aliases: ['donate', 'patreon', 'paypal'],
+			category: 'util',
+			description: {
+				content: 'Responds with IA\'s donation links.'
+			}
 		});
 	}
 
-	run(msg) {
-		return msg.say(stripIndents`
+	exec(msg) {
+		return msg.util.send(stripIndents`
 			Contribute to IA development!
 			<https://www.patreon.com/dragonfire535>
 			<https://paypal.me/dragonfire535>

@@ -1,23 +1,27 @@
-const Command = require('../../structures/Command');
+const { Command, Argument } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 const { shuffle, verify } = require('../../util/Util');
 const events = require('../../assets/json/hunger-games');
 
 module.exports = class HungerGamesCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'hunger-games',
-			aliases: ['hunger-games-simulator', 'brant-steele'],
-			group: 'games',
-			memberName: 'hunger-games',
-			description: 'Simulate a Hunger Games match with up to 24 tributes.',
+	constructor() {
+		super('hunger-games', {
+			aliases: ['hunger-games', 'hunger-games-simulator', 'brant-steele'],
+			category: 'games',
+			description: {
+				content: 'Simulate a Hunger Games match with up to 24 tributes.',
+				usage: '<...tributes>'
+			},
 			args: [
 				{
-					key: 'tributes',
-					prompt: 'Who should compete in the games? Up to 24 tributes can participate.',
-					type: 'string',
-					infinite: true,
-					max: 20
+					id: 'tributes',
+					prompt: {
+						start: 'Who should compete in the games? Up to 24 tributes can participate.',
+						retry: 'You provided an invalid tribute. Please try again.',
+						infinite: true,
+						limit: 24
+					},
+					type: Argument.range('string', 1, 20, true)
 				}
 			]
 		});
@@ -25,11 +29,12 @@ module.exports = class HungerGamesCommand extends Command {
 		this.playing = new Set();
 	}
 
-	async run(msg, { tributes }) {
-		if (tributes.length < 2) return msg.say(`...${tributes[0]} wins, as they were the only tribute.`);
-		if (tributes.length > 24) return msg.reply('Please do not enter more than 24 tributes.');
-		if (new Set(tributes).size !== tributes.length) return msg.reply('Please do not enter the same tribute twice.');
-		if (this.playing.has(msg.channel.id)) return msg.reply('Only one game may be occurring per channel.');
+	async exec(msg, { tributes }) {
+		if (tributes.length < 2) return msg.util.send(`...${tributes[0]} wins, as they were the only tribute.`);
+		if (new Set(tributes).size !== tributes.length) {
+			return msg.util.reply('Please do not enter the same tribute twice.');
+		}
+		if (this.playing.has(msg.channel.id)) return msg.util.reply('Only one game may be occurring per channel.');
 		this.playing.add(msg.channel.id);
 		try {
 			let sun = true;
@@ -54,18 +59,18 @@ module.exports = class HungerGamesCommand extends Command {
 					`;
 				}
 				text += `\n\n_Proceed?_`;
-				await msg.say(text);
+				await msg.util.sendNew(text);
 				const verification = await verify(msg.channel, msg.author, 120000);
 				if (!verification) {
 					this.playing.delete(msg.channel.id);
-					return msg.say('See you next time!');
+					return msg.util.sendNew('See you next time!');
 				}
 				if (!bloodbath) sun = !sun;
 				if (bloodbath) bloodbath = false;
 			}
 			this.playing.delete(msg.channel.id);
 			const remainingArr = Array.from(remaining);
-			return msg.say(`And the winner is... ${remainingArr[0]}!`);
+			return msg.util.sendNew(`And the winner is... ${remainingArr[0]}!`);
 		} catch (err) {
 			this.playing.delete(msg.channel.id);
 			throw err;

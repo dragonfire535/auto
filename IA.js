@@ -1,33 +1,14 @@
-const { IA_TOKEN, IA_PREFIX, OWNERS, INVITE } = process.env;
-const path = require('path');
-const { CommandoClient } = require('discord.js-commando');
-const client = new CommandoClient({
-	commandPrefix: IA_PREFIX,
-	owner: OWNERS.split(','),
-	invite: INVITE,
+const { IA_TOKEN, IA_PREFIX, OWNERS } = process.env;
+const Client = require('./structures/Client');
+const client = new Client({
+	prefix: IA_PREFIX.split('||'),
+	ownerID: OWNERS.split(','),
 	disableEveryone: true,
-	unknownCommandResponse: false,
 	disabledEvents: ['TYPING_START']
 });
 const activities = require('./assets/json/activity');
 
-client.registry
-	.registerDefaultTypes()
-	.registerTypesIn(path.join(__dirname, 'types'))
-	.registerGroups([
-		['util', 'Utility'],
-		['lint', 'Lint'],
-		['search', 'Search'],
-		['games', 'Games'],
-		['other', 'Other']
-	])
-	.registerDefaultCommands({
-		help: false,
-		ping: false,
-		prefix: false,
-		commandState: false
-	})
-	.registerCommandsIn(path.join(__dirname, 'commands'));
+client.commandHandler.loadAll();
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
@@ -42,13 +23,11 @@ client.on('disconnect', event => {
 	process.exit(0);
 });
 
-client.on('commandRun', command => console.log(`[COMMAND] Ran command ${command.groupID}:${command.memberName}.`));
-
 client.on('error', err => console.error('[ERROR]', err));
 
 client.on('warn', err => console.warn('[WARNING]', err));
 
-client.on('commandError', (command, err) => console.error('[COMMAND ERROR]', command.name, err));
+client.commandHandler.on('error', (err, msg, command) => console.error('[COMMAND ERROR]', command ? command.id : 'None', err));
 
 client.login(IA_TOKEN);
 

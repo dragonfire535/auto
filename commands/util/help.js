@@ -1,53 +1,64 @@
-const Command = require('../../structures/Command');
+const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { firstUpperCase } = require('../../util/Util');
 
 module.exports = class HelpCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'help',
-			aliases: ['commands', 'command-list'],
-			group: 'util',
-			memberName: 'help',
-			description: 'Displays a list of available commands, or detailed information for a specific command.',
-			guarded: true,
+	constructor() {
+		super('help', {
+			aliases: ['help', 'commands', 'command-list'],
+			category: 'util',
+			description: {
+				content: 'Displays a list of available commands, or detailed information for a specific command.',
+				usage: '<command>'
+			},
 			args: [
 				{
-					key: 'command',
-					prompt: 'Which command would you like to view the help for?',
-					type: 'command',
+					id: 'command',
+					prompt: {
+						start: 'Which command would you like to view the help for?',
+						retry: 'You provided an invalid command. Please try again.',
+						optional: true
+					},
+					type: 'commandAlias',
 					default: ''
 				}
 			]
 		});
 	}
 
-	async run(msg, { command }) {
+	async exec(msg, { command }) {
 		if (!command) {
 			const embed = new MessageEmbed()
 				.setTitle('Command List')
-				.setDescription(`Use ${msg.usage('<command>')} to view detailed information about a command.`)
 				.setColor(0x00AE86)
-				.setFooter(`${this.client.registry.commands.size} Commands`);
-			for (const group of this.client.registry.groups.values()) {
-				embed.addField(`❯ ${group.name}`, group.commands.map(cmd => cmd.name).join(', ') || 'None');
+				.setFooter(`${this.handler.modules.size} Commands`);
+			for (const category of this.handler.categories.values()) {
+				embed.addField(
+					`❯ ${this.parseCategoryName(category.id)}`,
+					category.map(cmd => `\`${cmd.id}\``).join(', ') || 'None'
+				);
 			}
 			try {
 				const msgs = [];
-				msgs.push(await msg.direct({ embed }));
-				if (msg.channel.type !== 'dm') msgs.push(await msg.say('📬 Sent you a DM with information.'));
+				msgs.push(await msg.author.send({ embed }));
+				if (msg.channel.type !== 'dm') msgs.push(await msg.util.send('📬 Sent you a DM with information.'));
 				return msgs;
 			} catch (err) {
-				return msg.reply('Failed to send DM. You probably have DMs disabled.');
+				return msg.util.reply('Failed to send DM. You probably have DMs disabled.');
 			}
 		}
-		return msg.say(stripIndents`
-			__Command **${command.name}**__${command.guildOnly ? ' (Usable only in servers)' : ''}
-			${command.description}${command.details ? `\n_${command.details}_` : ''}
+		return msg.util.send(stripIndents`
+			__Command **${command.id}**__${command.channel === 'guild' ? ' (Usable only in servers)' : ''}
+			${command.description.content}${command.description.details ? `\n_${command.description.details}_` : ''}
 
-			**Format**: ${msg.anyUsage(`${command.name} ${command.format || ''}`)}
-			**Aliases**: ${command.aliases.join(', ') || 'None'}
-			**Group**: ${command.group.name} (\`${command.groupID}:${command.memberName}\`)
+			**Format**: \`${command.id}${command.description.usage ? ` ${command.description.usage}` : ''}\`
+			**Aliases**: ${command.aliases.join(', ')}
+			**Group**: ${this.parseCategoryName(command.categoryID)}
 		`);
+	}
+
+	parseCategoryName(id) {
+		return id.split('-').map(word => firstUpperCase(word)).join(' ');
 	}
 };

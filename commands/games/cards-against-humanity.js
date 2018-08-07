@@ -1,27 +1,28 @@
-const Command = require('../../structures/Command');
+const { Command, Argument } = require('discord-akairo');
 const { Collection, escapeMarkdown } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { shuffle, awaitPlayers } = require('../../util/Util');
 const { blackCards, whiteCards } = require('../../assets/json/cards-against-humanity');
 
 module.exports = class CardsAgainstHumanityCommand extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'cards-against-humanity',
-			aliases: ['crude-cards', 'pretend-youre-xyzzy', 'cah'],
-			group: 'games',
-			memberName: 'cards-against-humanity',
-			description: 'Compete to see who can come up with the best card to fill in the blank.',
-			guildOnly: true,
+	constructor() {
+		super('cards-against-humanity', {
+			aliases: ['cards-against-humanity', 'crude-cards', 'pretend-youre-xyzzy', 'cah'],
+			category: 'games',
+			description: {
+				content: 'Compete to see who can come up with the best card to fill in the blank.',
+				usage: '<maximum amount of points>'
+			},
+			channel: 'guild',
 			clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 			args: [
 				{
 					key: 'maxPts',
-					label: 'maximum amount of points',
-					prompt: 'What amount of points should determine the winner?',
-					type: 'integer',
-					min: 1,
-					max: 20
+					prompt: {
+						start: 'What amount of points should determine the winner?',
+						retry: 'You provided an invalid points maximum. Please try again.'
+					},
+					type: maxPts => Argument.range('integer', 1, 20, true)
 				}
 			]
 		});
@@ -29,15 +30,15 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 		this.playing = new Set();
 	}
 
-	async run(msg, { maxPts }) {
-		if (this.playing.has(msg.channel.id)) return msg.reply('Only one game may be occurring per channel.');
+	async exec(msg, { maxPts }) {
+		if (this.playing.has(msg.channel.id)) return msg.util.reply('Only one game may be occurring per channel.');
 		this.playing.add(msg.channel.id);
 		try {
-			await msg.say('You will need at least 2 more players, at maximum 10. To join, type `join game`.');
+			await msg.util.sendNew('You will need at least 2 more players, at maximum 10. To join, type `join game`.');
 			const awaitedPlayers = await awaitPlayers(msg, 10, 3);
 			if (!awaitedPlayers) {
 				this.playing.delete(msg.channel.id);
-				return msg.say('Game could not be started...');
+				return msg.util.sendNew('Game could not be started...');
 			}
 			const players = this.generatePlayers(awaitedPlayers);
 			const czars = Array.from(players.values());
@@ -47,7 +48,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				czars.push(czar);
 				czars.shift();
 				const black = blackCards[Math.floor(Math.random() * blackCards.length)];
-				await msg.say(stripIndents`
+				await msg.util.sendNew(stripIndents`
 					The card czar will be ${czar.user}!
 					The Black Card is: **${escapeMarkdown(black.text)}**
 
@@ -102,11 +103,11 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				});
 				await Promise.all(turns);
 				if (!chosenCards.length) {
-					await msg.say('Hmm... No one even tried.');
+					await msg.util.sendNew('Hmm... No one even tried.');
 					break;
 				}
 				const cards = shuffle(chosenCards);
-				await msg.say(stripIndents`
+				await msg.util.sendNew(stripIndents`
 					${czar.user}, which card${black.pick > 1 ? 's' : ''} do you pick?
 					**Black Card**: ${escapeMarkdown(black.text)}
 
@@ -122,20 +123,20 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 					time: 120000
 				});
 				if (!chosen.size) {
-					await msg.say('Hmm... No one wins.');
+					await msg.util.sendNew('Hmm... No one wins.');
 					continue;
 				}
 				const player = players.get(cards[Number.parseInt(chosen.first().content, 10) - 1].id);
 				++player.points;
 				if (player.points >= maxPts) winner = player.user;
-				else await msg.say(`Nice one, ${player.user}! You now have **${player.points}** points!`);
+				else await msg.util.sendNew(`Nice one, ${player.user}! You now have **${player.points}** points!`);
 			}
 			this.playing.delete(msg.channel.id);
-			if (!winner) return msg.say('See you next time!');
-			return msg.say(`And the winner is... ${winner}! Great job!`);
+			if (!winner) return msg.util.sendNew('See you next time!');
+			return msg.util.sendNew(`And the winner is... ${winner}! Great job!`);
 		} catch (err) {
 			this.playing.delete(msg.channel.id);
-			return msg.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+			return msg.util.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
 		}
 	}
 
