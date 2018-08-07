@@ -1,6 +1,7 @@
 const Command = require('../../structures/Command');
 const request = require('node-superfetch');
 const branches = ['stable', 'master', 'rpc', 'commando'];
+const branchRegex = new RegExp(`^(docs|${branches.split('|')}), (.+)`, 'i');
 
 module.exports = class DiscordJSDocsCommand extends Command {
 	constructor(client) {
@@ -10,7 +11,7 @@ module.exports = class DiscordJSDocsCommand extends Command {
 			group: 'search',
 			memberName: 'discord-js-docs',
 			description: 'Searches the Discord.js docs for your query.',
-			patterns: [/^(?:docs,) (.+)/i],
+			patterns: [branchRegex],
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{
@@ -24,14 +25,15 @@ module.exports = class DiscordJSDocsCommand extends Command {
 	}
 
 	async run(msg, { query }, pattern) {
-		if (pattern) [, query] = msg.patternMatches;
+		let branch;
+		if (pattern) [, branch, query] = msg.patternMatches;
 		let project = 'main';
-		let branch = query.split(' ');
+		branch = query.split(' ');
 		if (branches.includes(branch[0])) {
 			query = branch.slice(1).join(' ');
 			branch = branch[0];
 		} else {
-			branch = 'master';
+			branch = 'stable';
 		}
 		if (branch === 'commando' || branch === 'rpc') {
 			project = branch;
