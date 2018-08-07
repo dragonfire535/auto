@@ -27,8 +27,8 @@ module.exports = class DiscordJSDocsCommand extends Command {
 	async run(msg, { query }, pattern) {
 		let branch;
 		if (pattern) [, branch, query] = msg.patternMatches;
+		else branch = query.split(' ');
 		let project = 'main';
-		branch = query.split(' ');
 		if (branches.includes(branch[0])) {
 			query = branch.slice(1).join(' ');
 			branch = branch[0];
