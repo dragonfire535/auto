@@ -67,7 +67,7 @@ class Util {
 				} catch (error) {
 					continue;
 				}
-				verify.remove(message.id);
+				verify.delete(message.id);
 			}
 		}
 		if (verify.size < min) return false;
