@@ -13,6 +13,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 			memberName: 'cards-against-humanity',
 			description: 'Compete to see who can come up with the best card to fill in the blank.',
 			guildOnly: true,
+			clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 			args: [
 				{
 					key: 'maxPts',
