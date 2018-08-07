@@ -13,7 +13,7 @@ function is to scan JS and JSON codeblocks for syntax errors, as well as getting
 certain programming information from sites such as MDN and Stack Overflow. It is
 used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
-## Commands (23)
+## Commands (22)
 ### Utility:
 
 * **eval**: Executes JavaScript code.
@@ -33,7 +33,6 @@ used on the [official Discord.js server](https://discord.gg/bRCvFy9).
 
 ### Search:
 
-* **discord-js-docs**: Searches the Discord.js docs for your query.
 * **github**: Responds with information on a GitHub repository.
 * **http-cat**: Responds with a cat for an HTTP status code.
 * **http-dog**: Responds with a dog for an HTTP status code.
