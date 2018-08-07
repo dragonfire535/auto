@@ -1,7 +1,7 @@
 const Command = require('../../structures/Command');
 const request = require('node-superfetch');
 const branches = ['stable', 'master', 'rpc', 'commando'];
-const branchRegex = new RegExp(`^(docs|${branches.split('|')}), (.+)`, 'i');
+const branchRegex = new RegExp(`^(docs|${branches.join('|')}), (.+)`, 'i');
 
 module.exports = class DiscordJSDocsCommand extends Command {
 	constructor(client) {
