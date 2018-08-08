@@ -30,7 +30,7 @@ class Client extends AkairoClient {
 				retries: 2
 			}
 		});
-		this.typeHandler = new TypeHandler(this, { directory: path.join(__dirname, 'types') });
+		this.typeHandler = new TypeHandler(this, { directory: path.join(__dirname, '..', 'types') });
 	}
 
 	setup() {
