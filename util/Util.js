@@ -1,6 +1,6 @@
 const yes = ['yes', 'y', 'ye', 'yeah', 'yup', 'yea'];
 const no = ['no', 'n', 'nah', 'nope'];
-const { SUCCESS_EMOJI_ID, FAILURE_EMOJI_ID } = process.env;
+const { SUCCESS_EMOJI_ID } = process.env;
 
 class Util {
 	static shuffle(array) {
@@ -53,7 +53,7 @@ class Util {
 		throw new TypeError(`${mode} is not a supported base64 mode.`);
 	}
 
-	static async awaitPlayers(msg, max, min, { text = 'join game', time = 30000 } = {}) {
+	static async awaitPlayers(msg, max, min, { text = 'join game', time = 30000, dmCheck = false } = {}) {
 		const joined = [];
 		joined.push(msg.author.id);
 		const filter = res => {
@@ -66,16 +66,13 @@ class Util {
 		};
 		const verify = await msg.channel.awaitMessages(filter, { max, time });
 		verify.set(msg.id, msg);
-		for (const message of verify.values()) {
-			try {
-				await message.author.send('Hi! Just testing that DMs work, pay this no mind.');
-			} catch (err) {
+		if (dmCheck) {
+			for (const message of verify.values()) {
 				try {
-					await message.react(FAILURE_EMOJI_ID || '❌');
-				} catch (error) {
-					continue;
+					await message.author.send('Hi! Just testing that DMs work, pay this no mind.');
+				} catch (err) {
+					verify.delete(message.id);
 				}
-				verify.delete(message.id);
 			}
 		}
 		if (verify.size < min) return false;
