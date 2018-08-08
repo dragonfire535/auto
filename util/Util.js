@@ -57,11 +57,11 @@ class Util {
 		const joined = [];
 		joined.push(msg.author.id);
 		const filter = res => {
-			if (msg.author.bot) return false;
+			if (res.author.bot) return false;
 			if (joined.includes(res.author.id)) return false;
 			if (res.content.toLowerCase() !== text.toLowerCase()) return false;
 			joined.push(res.author.id);
-			msg.react(SUCCESS_EMOJI_ID || '✅').catch(() => null);
+			res.react(SUCCESS_EMOJI_ID || '✅').catch(() => null);
 			return true;
 		};
 		const verify = await msg.channel.awaitMessages(filter, { max, time });
