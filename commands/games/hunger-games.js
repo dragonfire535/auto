@@ -1,4 +1,4 @@
-const { Command, Argument } = require('discord-akairo');
+const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 const { shuffle, verify } = require('../../util/Util');
 const events = require('../../assets/json/hunger-games');
