@@ -8,7 +8,6 @@ const client = new Client({
 });
 const activities = require('./assets/json/activity');
 const { stripIndents } = require('common-tags');
-const { list } = require('./util/Util');
 
 client.setup();
 
@@ -34,7 +33,7 @@ client.commandHandler.on('error', (err, msg) => {
 	msg.reply(stripIndents`
 		An error occurred while running the command: \`${err.message}\`
 		You shouldn't ever receive an error like this.
-		Please contact ${list(client.owners.map(owner => owner.tag), 'or')}${INVITE ? ` in this server: ${INVITE}` : '.'}
+		${INVITE ? `Please visit ${INVITE} for help.` : 'Please pray for help.'}
 	`).catch(() => null);
 });
 
