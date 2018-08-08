@@ -1,8 +1,6 @@
 const { AkairoClient, CommandHandler, TypeHandler } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 const path = require('path');
-const CodeType = require('../types/code');
-const URLEncodedType = require('../types/url-encoded');
 
 class Client extends AkairoClient {
 	constructor(options) {
