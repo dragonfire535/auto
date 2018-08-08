@@ -8,7 +8,7 @@ const client = new Client({
 });
 const activities = require('./assets/json/activity');
 const { stripIndents } = require('common-tags');
-const { list } = require('./util');
+const { list } = require('./util/Util');
 
 client.setup();
 
