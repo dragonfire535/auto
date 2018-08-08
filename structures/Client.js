@@ -1,4 +1,4 @@
-const { AkairoClient, CommandHandler } = require('discord-akairo');
+const { AkairoClient, CommandHandler, TypeHandler } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 const path = require('path');
 const CodeType = require('../types/code');
@@ -32,9 +32,14 @@ class Client extends AkairoClient {
 				retries: 2
 			}
 		});
+		this.typeHandler = new TypeHandler(this, { directory: path.join(__dirname, 'types') });
+	}
 
-		this.commandHandler.resolver.addType('code', CodeType);
-		this.commandHandler.resolver.addType('url-encoded', URLEncodedType);
+	setup() {
+		this.commandHandler.useTypeHandler(this.typeHandler);
+		this.typeHandler.useCommandHandler(this.commandHandler);
+		this.commandHandler.loadAll();
+		this.typeHandler.loadAll();
 	}
 }
 

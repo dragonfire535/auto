@@ -1,6 +1,7 @@
+const { Type } = require('discord-akairo');
 const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
 
-module.exports = async (phrase, msg) => {
+module.exports = Type.create('code', async (phrase, msg) => {
 	if (!phrase) return null;
 	if (/^[0-9]+$/.test(phrase)) {
 		try {
@@ -18,4 +19,4 @@ module.exports = async (phrase, msg) => {
 		};
 	}
 	return { code: phrase, lang: null };
-};
+});

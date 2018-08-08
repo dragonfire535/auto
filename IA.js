@@ -1,4 +1,4 @@
-const { IA_TOKEN, IA_PREFIX, OWNERS } = process.env;
+const { IA_TOKEN, IA_PREFIX, OWNERS, INVITE } = process.env;
 const Client = require('./structures/Client');
 const client = new Client({
 	prefix: IA_PREFIX.split('||'),
@@ -7,8 +7,10 @@ const client = new Client({
 	disabledEvents: ['TYPING_START']
 });
 const activities = require('./assets/json/activity');
+const { stripIndents } = require('common-tags');
+const { list } = require('./util');
 
-client.commandHandler.loadAll();
+client.setup();
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
@@ -27,8 +29,13 @@ client.on('error', err => console.error('[ERROR]', err));
 
 client.on('warn', err => console.warn('[WARNING]', err));
 
-client.commandHandler.on('error', (err, msg, command) => {
-	console.error('[COMMAND ERROR]', command ? command.id : 'None', err);
+client.commandHandler.on('error', (err, msg) => {
+	console.error('[COMMAND ERROR]', err);
+	msg.reply(stripIndents`
+		An error occurred while running the command: \`${err.message}\`
+		You shouldn't ever receive an error like this.
+		Please contact ${list(client.owners.map(owner => owner.tag), 'or')}${INVITE ? ` in this server: ${INVITE}` : '.'}
+	`).catch(() => null);
 });
 
 client.login(IA_TOKEN);
