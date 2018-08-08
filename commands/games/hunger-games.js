@@ -21,7 +21,7 @@ module.exports = class HungerGamesCommand extends Command {
 						infinite: true,
 						limit: 24
 					},
-					match: 'seperate',
+					match: 'separate',
 					type: tribute => tribute && tribute.length < 21 ? tribute : null
 				}
 			]
