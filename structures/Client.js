@@ -10,7 +10,7 @@ class Client extends AkairoClient {
 
 		this.commandHandler = new CommandHandler(this, {
 			directory: path.join(__dirname, '..', 'commands'),
-			prefix: options.prefix,
+			prefix: msg => msg.channel.type === 'text' ? options.prefix : '',
 			aliasReplacement: /-/g,
 			handleEdits: true,
 			commandUtil: true,
