@@ -17,7 +17,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 			clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 			args: [
 				{
-					key: 'maxPts',
+					id: 'maxPts',
 					prompt: {
 						start: 'What amount of points should determine the winner?',
 						retry: 'You provided an invalid points maximum. Please try again.'
