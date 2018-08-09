@@ -6,10 +6,7 @@ module.exports = class HastebinCommand extends Command {
 		super('hastebin', {
 			aliases: ['hastebin', 'pastebin'],
 			category: 'other',
-			description: {
-				content: 'Posts code to hastebin.',
-				usage: '<code>'
-			},
+			description: 'Posts code to hastebin.',
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{

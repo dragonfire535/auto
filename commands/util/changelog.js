@@ -9,9 +9,7 @@ module.exports = class ChangelogCommand extends Command {
 		super('changelog', {
 			aliases: ['changelog', 'updates', 'commits'],
 			category: 'util',
-			description: {
-				content: 'Responds with IA\'s latest 10 commits.'
-			}
+			description: 'Responds with the bot\'s latest 10 commits.'
 		});
 	}
 

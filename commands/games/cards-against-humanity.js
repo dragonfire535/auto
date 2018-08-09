@@ -9,10 +9,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 		super('cards-against-humanity', {
 			aliases: ['cards-against-humanity', 'crude-cards', 'pretend-youre-xyzzy', 'cah'],
 			category: 'games',
-			description: {
-				content: 'Compete to see who can come up with the best card to fill in the blank.',
-				usage: '<maximum amount of points>'
-			},
+			description: 'Compete to see who can come up with the best card to fill in the blank.',
 			channel: 'guild',
 			clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 			args: [

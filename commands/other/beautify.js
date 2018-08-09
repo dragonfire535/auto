@@ -7,10 +7,7 @@ module.exports = class BeautifyCommand extends Command {
 		super('beautify', {
 			aliases: ['beautify', 'js-beautify'],
 			category: 'other',
-			description: {
-				content: 'Beautifies code with js-beautify.',
-				usage: '<code>'
-			},
+			description: 'Beautifies code with js-beautify.',
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{

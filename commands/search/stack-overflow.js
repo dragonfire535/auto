@@ -8,10 +8,7 @@ module.exports = class StackOverflowCommand extends Command {
 		super('stack-overflow', {
 			aliases: ['stack-overflow', 'stack-exchange'],
 			category: 'search',
-			description: {
-				content: 'Searches Stack Overflow for your query.',
-				usage: '<query>'
-			},
+			description: 'Searches Stack Overflow for your query.',
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{

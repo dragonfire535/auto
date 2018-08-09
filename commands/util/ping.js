@@ -6,9 +6,7 @@ module.exports = class PingCommand extends Command {
 		super('ping', {
 			aliases: ['ping', 'pong', 'ping-pong'],
 			category: 'util',
-			description: {
-				content: 'Checks the bot\'s ping to the Discord server.'
-			}
+			description: 'Checks the bot\'s ping to the Discord server.'
 		});
 	}
 

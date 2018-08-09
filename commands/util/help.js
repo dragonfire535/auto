@@ -8,10 +8,7 @@ module.exports = class HelpCommand extends Command {
 		super('help', {
 			aliases: ['help', 'commands', 'command-list'],
 			category: 'util',
-			description: {
-				content: 'Displays a list of available commands, or detailed information for a specific command.',
-				usage: '<command>'
-			},
+			description: 'Displays a list of available commands, or detailed information for a specific command.',
 			args: [
 				{
 					id: 'command',
@@ -50,9 +47,9 @@ module.exports = class HelpCommand extends Command {
 		}
 		return msg.util.send(stripIndents`
 			__Command **${command.id}**__${command.channel === 'guild' ? ' (Usable only in servers)' : ''}
-			${command.description.content}${command.description.details ? `\n_${command.description.details}_` : ''}
+			${command.description}${command.ownerOnly ? '\n⚠ Only the bot owner may use this command. ⚠' : ''}
 
-			**Format**: \`${command.id}${command.description.usage ? ` ${command.description.usage}` : ''}\`
+			**Format**: \`${command.id}${command.args.args.length ? ` ${this.makeArgList(command.args)}` : ''}\`
 			**Aliases**: ${command.aliases.join(', ')}
 			**Group**: ${this.parseCategoryName(command.categoryID)}
 		`);
@@ -60,5 +57,16 @@ module.exports = class HelpCommand extends Command {
 
 	parseCategoryName(id) {
 		return id.split('-').map(word => firstUpperCase(word)).join(' ');
+	}
+
+	makeArgList(args) {
+		return args.map(arg => {
+			let result = '';
+			result += args.optional ? '[' : '<';
+			if (arg.prompt.infinite) result += '...';
+			result += arg.id;
+			result += args.optional ? ']' : '>';
+			return result;
+		}).join(' ');
 	}
 };

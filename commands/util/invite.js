@@ -7,9 +7,7 @@ module.exports = class InviteCommand extends Command {
 		super('invite', {
 			aliases: ['invite', 'join'],
 			category: 'util',
-			description: {
-				content: 'Responds with IA\'s invite links.'
-			}
+			description: 'Responds with the bot\'s invite links.'
 		});
 	}
 

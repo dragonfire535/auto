@@ -10,13 +10,9 @@ const nlPattern = new RegExp(nl, 'g');
 module.exports = class EvalCommand extends Command {
 	constructor() {
 		super('eval', {
-			aliases: ['eval'],
+			aliases: ['eval', 'evaluate'],
 			category: 'util',
-			description: {
-				content: 'Executes JavaScript code.',
-				usage: '<script>',
-				details: 'Only the bot owner(s) may use this command.'
-			},
+			description: 'Executes JavaScript code.',
 			ownerOnly: true,
 			args: [
 				{

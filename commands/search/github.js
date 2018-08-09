@@ -9,10 +9,7 @@ module.exports = class GithubCommand extends Command {
 		super('github', {
 			aliases: ['github', 'github-repository', 'github-repo', 'git-repo'],
 			category: 'search',
-			description: {
-				content: 'Responds with information on a GitHub repository.',
-				usage: '<author> <repository>'
-			},
+			description: 'Responds with information on a GitHub repository.',
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{

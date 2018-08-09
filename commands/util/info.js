@@ -9,9 +9,7 @@ module.exports = class InfoCommand extends Command {
 		super('info', {
 			aliases: ['info', 'information', 'stats'],
 			category: 'util',
-			description: {
-				content: 'Responds with detailed bot information.'
-			},
+			description: 'Responds with detailed bot information.',
 			clientPermissions: ['EMBED_LINKS']
 		});
 	}

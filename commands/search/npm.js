@@ -8,10 +8,7 @@ module.exports = class NPMCommand extends Command {
 		super('npm', {
 			aliases: ['npm', 'npm-package'],
 			category: 'search',
-			description: {
-				content: 'Responds with information on an NPM package.',
-				usage: '<package>'
-			},
+			description: 'Responds with information on an NPM package.',
 			clientPermissions: ['EMBED_LINKS'],
 			args: [
 				{

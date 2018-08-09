@@ -8,10 +8,7 @@ module.exports = class HungerGamesCommand extends Command {
 		super('hunger-games', {
 			aliases: ['hunger-games', 'hunger-games-simulator', 'brant-steele'],
 			category: 'games',
-			description: {
-				content: 'Simulate a Hunger Games match with up to 24 tributes.',
-				usage: '<...tributes>'
-			},
+			description: 'Simulate a Hunger Games match with up to 24 tributes.',
 			args: [
 				{
 					id: 'tributes',

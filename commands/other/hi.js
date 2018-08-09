@@ -5,9 +5,7 @@ module.exports = class HiCommand extends Command {
 		super('hi', {
 			aliases: ['hi', 'hello', 'hey', 'hoi', 'hola'],
 			category: 'other',
-			description: {
-				content: 'Hello.'
-			}
+			description: 'Hello.'
 		});
 	}
 

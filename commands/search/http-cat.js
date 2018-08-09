@@ -6,10 +6,7 @@ module.exports = class HttpCatCommand extends Command {
 		super('http-cat', {
 			aliases: ['http-cat'],
 			category: 'search',
-			description: {
-				content: 'Responds with a cat for an HTTP status code.',
-				usage: '<status code>'
-			},
+			description: 'Responds with a cat for an HTTP status code.',
 			clientPermissions: ['ATTACH_FILES'],
 			args: [
 				{

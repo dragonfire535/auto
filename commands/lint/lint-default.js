@@ -12,10 +12,7 @@ module.exports = class LintDefaultCommand extends Command {
 		super('lint-default', {
 			aliases: ['lint-default', 'lint-recommended', 'lint', 'eslint', 'eslint-default', 'eslint-recommended'],
 			category: 'lint',
-			description: {
-				content: 'Lints code with the recommended rules.',
-				usage: '<code>'
-			},
+			description: 'Lints code with the recommended rules.',
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{

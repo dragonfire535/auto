@@ -6,9 +6,7 @@ module.exports = class DonateCommand extends Command {
 		super('donate', {
 			aliases: ['donate', 'patreon', 'paypal'],
 			category: 'util',
-			description: {
-				content: 'Responds with IA\'s donation links.'
-			}
+			description: 'Responds with the bot\'s donation links.'
 		});
 	}
 

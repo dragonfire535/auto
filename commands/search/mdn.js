@@ -8,10 +8,7 @@ module.exports = class MDNCommand extends Command {
 		super('mdn', {
 			aliases: ['mdn', 'mozilla-developer-network'],
 			category: 'search',
-			description: {
-				content: 'Searches MDN for your query.',
-				usage: '<query>'
-			},
+			description: 'Searches MDN for your query.',
 			regex: /^(?:mdn,) (.+)/i,
 			clientPermissions: ['EMBED_LINKS'],
 			args: [

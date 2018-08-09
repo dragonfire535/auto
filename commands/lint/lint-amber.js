@@ -14,10 +14,7 @@ module.exports = class LintAmberCommand extends Command {
 		super('lint-amber', {
 			aliases: ['lint-amber', 'lint-config-amber', 'eslint-amber', 'eslint-config-amber'],
 			category: 'lint',
-			description: {
-				content: 'Lints code with eslint-config-amber rules.',
-				usage: '<code>'
-			},
+			description: 'Lints code with eslint-config-amber rules.',
 			clientPermissions: ['READ_MESSAGE_HISTORY'],
 			args: [
 				{

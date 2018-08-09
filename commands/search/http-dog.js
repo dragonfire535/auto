@@ -6,10 +6,7 @@ module.exports = class HttpDogCommand extends Command {
 		super('http-dog', {
 			aliases: ['http-dog'],
 			category: 'search',
-			description: {
-				content: 'Responds with a dog for an HTTP status code.',
-				usage: '<status code>'
-			},
+			description: 'Responds with a dog for an HTTP status code.',
 			clientPermissions: ['ATTACH_FILES'],
 			args: [
 				{
