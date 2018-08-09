@@ -21,7 +21,7 @@ module.exports = class NPMCommand extends Command {
 						retry: 'You provided an invalid package. Please try again.'
 					},
 					match: 'content',
-					type: 'url-encoded'
+					type: pkg => pkg ? encodeURIComponent(pkg.replace(/ /g, '-')) : null
 				}
 			]
 		});

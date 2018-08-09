@@ -1,4 +1,4 @@
-const { Command, Type } = require('discord-akairo');
+const { Command, Argument } = require('discord-akairo');
 const { Collection, escapeMarkdown } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { shuffle, awaitPlayers } = require('../../util/Util');
@@ -22,7 +22,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 						start: 'What amount of points should determine the winner?',
 						retry: 'You provided an invalid points maximum. Please try again.'
 					},
-					type: Type.range('integer', 1, 20, true)
+					type: Argument.range('integer', 1, 20, true)
 				}
 			]
 		});

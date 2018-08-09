@@ -1,6 +1,8 @@
-const { AkairoClient, CommandHandler, TypeHandler } = require('discord-akairo');
+const { AkairoClient, CommandHandler } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
+const fs = require('fs');
 const path = require('path');
+const jsRegex = /\.js$/i;
 
 class Client extends AkairoClient {
 	constructor(options) {
@@ -30,14 +32,19 @@ class Client extends AkairoClient {
 				retries: 2
 			}
 		});
-		this.typeHandler = new TypeHandler(this, { directory: path.join(__dirname, '..', 'types') });
 	}
 
 	setup() {
-		this.commandHandler.useTypeHandler(this.typeHandler);
-		this.typeHandler.useCommandHandler(this.commandHandler);
 		this.commandHandler.loadAll();
-		this.typeHandler.loadAll();
+		const typePath = path.join(__dirname, '..', 'types');
+		if (fs.existsSync(typePath)) {
+			const typeFiles = fs.readdirSync(typePath);
+			for (const file of typeFiles) {
+				if (!jsRegex.test(file)) continue;
+				const type = require(path.join(typePath, file));
+				this.commandHandler.resolver.addType(type.id, type.exec.bind(type));
+			}
+		}
 	}
 }
 

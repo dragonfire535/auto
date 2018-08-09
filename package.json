@@ -32,7 +32,7 @@
 	},
 	"dependencies": {
 		"common-tags": "^1.8.0",
-		"discord-akairo": "github:1Computer1/discord-akairo#typehandler",
+		"discord-akairo": "github:1Computer1/discord-akairo",
 		"discord.js": "github:discordjs/discord.js",
 		"erlpack": "github:discordapp/erlpack",
 		"eslint": "^5.3.0",

@@ -22,7 +22,7 @@ module.exports = class LintRuleCommand extends Command {
 						retry: 'You provided an invalid rule. Please try again.'
 					},
 					match: 'content',
-					type: 'lowercase'
+					type: rule => rule ? rule.toLowerCase().replace(/ /g, '-') : null
 				}
 			]
 		});
