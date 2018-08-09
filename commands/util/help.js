@@ -49,7 +49,7 @@ module.exports = class HelpCommand extends Command {
 			__Command **${command.id}**__${command.channel === 'guild' ? ' (Usable only in servers)' : ''}
 			${command.description}${command.ownerOnly ? '\n⚠ Only the bot owner may use this command. ⚠' : ''}
 
-			**Format**: \`${command.id}${command.args.args.length ? ` ${this.makeArgList(command.args)}` : ''}\`
+			**Format**: \`${command.id}${command.args.args.length ? ` ${this.makeArgList(command.args.args)}` : ''}\`
 			**Aliases**: ${command.aliases.join(', ')}
 			**Group**: ${this.parseCategoryName(command.categoryID)}
 		`);
