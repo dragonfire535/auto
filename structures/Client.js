@@ -1,8 +1,7 @@
 const { AkairoClient, CommandHandler } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
-const fs = require('fs');
 const path = require('path');
-const jsRegex = /\.js$/i;
+const CodeType = require('../types/code');
 
 class Client extends AkairoClient {
 	constructor(options) {
@@ -36,15 +35,7 @@ class Client extends AkairoClient {
 
 	setup() {
 		this.commandHandler.loadAll();
-		const typePath = path.join(__dirname, '..', 'types');
-		if (fs.existsSync(typePath)) {
-			const typeFiles = fs.readdirSync(typePath);
-			for (const file of typeFiles) {
-				if (!jsRegex.test(file)) continue;
-				const type = require(path.join(typePath, file));
-				this.commandHandler.resolver.addType(type.id, type.exec.bind(type));
-			}
-		}
+		this.commandHandler.resolver.addType('code', CodeType);
 	}
 }
 
