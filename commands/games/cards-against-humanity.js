@@ -104,7 +104,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 						});
 						await player.user.send(`Nice! Return to ${msg.channel} to await the results!`);
 					} catch (err) {
-						return;
+						return; // eslint-disable-line no-useless-return
 					}
 				});
 				await Promise.all(turns);
