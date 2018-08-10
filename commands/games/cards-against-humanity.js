@@ -3,6 +3,7 @@ const { Collection, escapeMarkdown } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { shuffle, awaitPlayers } = require('../../util/Util');
 const { blackCards, whiteCards } = require('../../assets/json/cards-against-humanity');
+const { SUCCESS_EMOJI_ID, FAILURE_EMOJI_ID } = process.env;
 
 module.exports = class CardsAgainstHumanityCommand extends Command {
 	constructor() {
@@ -30,6 +31,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 	async exec(msg, { maxPts }) {
 		if (this.playing.has(msg.channel.id)) return msg.util.reply('Only one game may be occurring per channel.');
 		this.playing.add(msg.channel.id);
+		let joinLeaveCollector = null;
 		try {
 			await msg.util.sendNew('You will need at least 2 more players, at maximum 10. To join, type `join game`.');
 			const awaitedPlayers = await awaitPlayers(msg, 10, 3, { dmCheck: true });
@@ -37,12 +39,15 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				this.playing.delete(msg.channel.id);
 				return msg.util.sendNew('Game could not be started...');
 			}
-			const players = this.generatePlayers(awaitedPlayers);
-			const czars = Array.from(players.values());
+			const players = new Collection();
+			for (const user of awaitedPlayers) this.generatePlayer(player, players);
+			const czars = players.map(player => player.id);
 			let winner = null;
+			let counter = 0;
+			joinLeaveCollector = this.createJoinLeaveCollector(msg.channel, players, czars);
 			while (!winner) {
-				const czar = czars[0];
-				czars.push(czar);
+				const czar = players.get(czars[0]);
+				czars.push(czar.id);
 				czars.shift();
 				const black = blackCards[Math.floor(Math.random() * blackCards.length)];
 				await msg.util.sendNew(stripIndents`
@@ -101,7 +106,9 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				await Promise.all(turns);
 				if (!chosenCards.length) {
 					await msg.util.sendNew('Hmm... No one even tried.');
-					break;
+					counter += 1;
+					if (counter > 1) break;
+					continue;
 				}
 				const cards = shuffle(chosenCards);
 				await msg.util.sendNew(stripIndents`
@@ -121,37 +128,43 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				});
 				if (!chosen.size) {
 					await msg.util.sendNew('Hmm... No one wins.');
+					counter += 1;
+					if (counter > 1) break;
 					continue;
 				}
+				if (counter !== 0) counter = 0;
 				const player = players.get(cards[Number.parseInt(chosen.first().content, 10) - 1].id);
+				if (!player) {
+					await msg.util.sendNew('Oh no, I think that player left! No points will be awarded...');
+					continue;
+				}
 				++player.points;
 				if (player.points >= maxPts) winner = player.user;
 				else await msg.util.sendNew(`Nice one, ${player.user}! You now have **${player.points}** points!`);
 			}
+			joinLeaveCollector.stop();
 			this.playing.delete(msg.channel.id);
 			if (!winner) return msg.util.sendNew('See you next time!');
 			return msg.util.sendNew(`And the winner is... ${winner}! Great job!`);
 		} catch (err) {
 			this.playing.delete(msg.channel.id);
+			if (joinLeaveCollector) joinLeaveCollector.stop();
 			return msg.util.reply(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
 		}
 	}
 
-	generatePlayers(list) {
-		const players = new Collection();
-		for (const user of list) {
-			const cards = new Set();
-			for (let i = 0; i < 5; i++) {
-				const valid = whiteCards.filter(card => !cards.has(card));
-				cards.add(valid[Math.floor(Math.random() * valid.length)]);
-			}
-			players.set(user.id, {
-				id: user.id,
-				user,
-				points: 0,
-				hand: cards
-			});
+	generatePlayer(user, players) {
+		const cards = new Set();
+		for (let i = 0; i < 5; i++) {
+			const valid = whiteCards.filter(card => !cards.has(card));
+			cards.add(valid[Math.floor(Math.random() * valid.length)]);
 		}
+		players.set(user.id, {
+			id: user.id,
+			user,
+			points: 0,
+			hand: cards
+		});
 		return players;
 	}
 
@@ -164,5 +177,30 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 		player.hand.delete('<Blank>');
 		if (!blank.size) return `A blank card ${player.user.tag} forgot to fill out.`;
 		return blank.first().content;
+	}
+
+	createJoinLeaveCollector(channel, players, czars) {
+		const filter = res => {
+			if (res.author.bot) return false;
+			if (players.has(res.author.id)) return false;
+			if (czars[0] === res.author.id) {
+				res.react(FAILURE_EMOJI_ID || '❌').catch(() => null);
+				return false;
+			}
+			if (!['join game', 'leave game'].includes(res.content.toLowerCase())) return false;
+			res.react(SUCCESS_EMOJI_ID || '✅').catch(() => null);
+			return true;
+		};
+		const collector = channel.createMessageCollector(filter);
+		collector.on('collect', msg => {
+			if (msg.content.toLowerCase() === 'join game') {
+				players.set(msg.author.id, msg.author);
+				czars.push(msg.author.id);
+			} else if (msg.content.toLowerCase() === 'leave game') {
+				players.delete(msg.author.id);
+				czars.splice(czars.indexOf(msg.author.id), 1);
+			}
+		});
+		return collector;
 	}
 };
