@@ -58,45 +58,49 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 						player.hand.add(valid[Math.floor(Math.random() * valid.length)]);
 					}
 					if (player.user.id === czar.user.id) return;
-					if (player.hand.size < black.pick) {
-						await player.user.send('You don\'t have enough cards!');
-						return;
-					}
-					const hand = Array.from(player.hand);
-					await player.user.send(stripIndents`
-						__**Your hand is**__:
-						${hand.map((card, i) => `**${i + 1}.** ${card}`).join('\n')}
+					try {
+						if (player.hand.size < black.pick) {
+							await player.user.send('You don\'t have enough cards!');
+							return;
+						}
+						const hand = Array.from(player.hand);
+						await player.user.send(stripIndents`
+							__**Your hand is**__:
+							${hand.map((card, i) => `**${i + 1}.** ${card}`).join('\n')}
 
-						**Black Card**: ${escapeMarkdown(black.text)}
-						**Card Czar**: ${czar.user.username}
-						Pick **${black.pick}** card${black.pick > 1 ? 's' : ''}!
-					`);
-					const chosen = [];
-					const filter = res => {
-						const existing = hand[Number.parseInt(res.content, 10) - 1];
-						if (!existing) return false;
-						if (chosen.includes(existing)) return false;
-						chosen.push(existing);
-						return true;
-					};
-					const choices = await player.user.dmChannel.awaitMessages(filter, {
-						max: black.pick,
-						time: 120000
-					});
-					if (!choices.size || choices.size < black.pick) {
-						await player.user.send('Skipping your turn...');
+							**Black Card**: ${escapeMarkdown(black.text)}
+							**Card Czar**: ${czar.user.username}
+							Pick **${black.pick}** card${black.pick > 1 ? 's' : ''}!
+						`);
+						const chosen = [];
+						const filter = res => {
+							const existing = hand[Number.parseInt(res.content, 10) - 1];
+							if (!existing) return false;
+							if (chosen.includes(existing)) return false;
+							chosen.push(existing);
+							return true;
+						};
+						const choices = await player.user.dmChannel.awaitMessages(filter, {
+							max: black.pick,
+							time: 120000
+						});
+						if (!choices.size || choices.size < black.pick) {
+							await player.user.send('Skipping your turn...');
+							return;
+						}
+						if (chosen.includes('<Blank>')) {
+							const handled = await this.handleBlank(player);
+							chosen[chosen.indexOf('<Blank>')] = handled;
+						}
+						for (const card of chosen) player.hand.delete(card);
+						chosenCards.push({
+							id: player.id,
+							cards: chosen
+						});
+						await player.user.send(`Nice! Return to ${msg.channel} to await the results!`);
+					} catch (err) {
 						return;
 					}
-					if (chosen.includes('<Blank>')) {
-						const handled = await this.handleBlank(player);
-						chosen[chosen.indexOf('<Blank>')] = handled;
-					}
-					for (const card of chosen) player.hand.delete(card);
-					chosenCards.push({
-						id: player.id,
-						cards: chosen
-					});
-					await player.user.send(`Nice! Return to ${msg.channel} to await the results!`);
 				});
 				await Promise.all(turns);
 				if (!chosenCards.length) {
