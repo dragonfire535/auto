@@ -123,11 +123,11 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 	}
 
 	async playerTurn(player, czar, black, channel, chosenCards) {
+		if (player.user.id === czar.user.id) return;
 		if (player.hand.size < 11) {
 			const valid = whiteCards.filter(card => !player.hand.has(card));
 			player.hand.add(valid[Math.floor(Math.random() * valid.length)]);
 		}
-		if (player.user.id === czar.user.id) return;
 		try {
 			if (player.hand.size < black.pick) {
 				await player.user.send('You don\'t have enough cards!');
