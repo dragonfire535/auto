@@ -199,7 +199,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 		const collector = channel.createMessageCollector(filter);
 		collector.on('collect', msg => {
 			if (msg.content.toLowerCase() === 'join game') {
-				players.set(msg.author.id, msg.author);
+				this.generatePlayer(msg.author, players);
 				czars.push(msg.author.id);
 			} else if (msg.content.toLowerCase() === 'leave game') {
 				players.delete(msg.author.id);
