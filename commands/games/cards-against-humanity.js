@@ -40,7 +40,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				return msg.util.sendNew('Game could not be started...');
 			}
 			const players = new Collection();
-			for (const user of awaitedPlayers) this.generatePlayer(player, players);
+			for (const user of awaitedPlayers) this.generatePlayer(user, players);
 			const czars = players.map(player => player.id);
 			let winner = null;
 			let counter = 0;
@@ -186,7 +186,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 	createJoinLeaveCollector(channel, players, czars) {
 		const filter = res => {
 			if (res.author.bot) return false;
-			if (players.has(res.author.id)) return false;
+			if (players.has(res.author.id) && res.content.toLowerCase() !== 'leave game') return false;
 			if (czars[0] === res.author.id) {
 				res.react(FAILURE_EMOJI_ID || '❌').catch(() => null);
 				return false;
