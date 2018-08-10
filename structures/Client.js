@@ -11,6 +11,7 @@ class Client extends AkairoClient {
 			directory: path.join(__dirname, '..', 'commands'),
 			prefix: msg => msg.channel.type === 'text' ? options.prefix : '',
 			aliasReplacement: /-/g,
+			allowMention: true,
 			handleEdits: true,
 			commandUtil: true,
 			commandUtilLifetime: 60000,
