@@ -50,7 +50,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 			const czars = players.map(player => player.id);
 			let winner = null;
 			if (!noMidJoin) joinLeaveCollector = this.createJoinLeaveCollector(msg.channel, players, czars);
-			pointViewCollector = this.createPointViewCollector(msg, players);
+			pointViewCollector = this.createPointViewCollector(msg.channel, players);
 			while (!winner) {
 				for (const player of players) {
 					if (player.strikes >= 3) this.kickPlayer(player, players, czars);
