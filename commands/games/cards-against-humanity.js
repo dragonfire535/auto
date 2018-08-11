@@ -114,6 +114,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				}
 			}
 			if (joinLeaveCollector) joinLeaveCollector.stop();
+			pointViewCollector.stop();
 			this.playing.delete(msg.channel.id);
 			if (!winner) return msg.util.sendNew('See you next time!');
 			return msg.util.sendNew(`And the winner is... ${winner}! Great job!`);
