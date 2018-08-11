@@ -128,7 +128,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 
 	generatePlayer(user, players) {
 		const cards = new Set();
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < 10; i++) {
 			const valid = whiteCards.filter(card => !cards.has(card));
 			cards.add(valid[Math.floor(Math.random() * valid.length)]);
 		}
@@ -179,7 +179,7 @@ module.exports = class CardsAgainstHumanityCommand extends Command {
 				player.points--;
 				await player.user.send('Swapping cards...');
 				for (const card of player.hand) player.hand.delete(card);
-				for (let i = 0; i < 5; i++) {
+				for (let i = 0; i < 10; i++) {
 					const valid = whiteCards.filter(card => !player.hand.has(card));
 					player.hand.add(valid[Math.floor(Math.random() * valid.length)]);
 				}
