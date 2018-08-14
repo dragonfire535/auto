@@ -1,6 +1,6 @@
 {
 	"name": "ia",
-	"version": "14.0.4",
+	"version": "14.0.5",
 	"description": "A code scanner Discord bot.",
 	"main": "IA.js",
 	"scripts": {
