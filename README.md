@@ -14,9 +14,9 @@ function is to scan JS and JSON codeblocks for syntax errors.
 ## Commands (12)
 ### Lint:
 
-* **lint-default**: Lints code.
 * **lint-json**: Lints JSON.
 * **lint-rule**: Gets information on an eslint rule.
+* **lint**: Lints code.
 
 ### Other:
 
