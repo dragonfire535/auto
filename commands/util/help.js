@@ -62,11 +62,11 @@ module.exports = class HelpCommand extends Command {
 	makeArgList(args) {
 		return args.map(arg => {
 			let result = '';
-			result += args.optional || arg.flag ? '[' : '<';
+			result += (arg.prompt && arg.prompt.optional) || arg.flag ? '[' : '<';
 			if (arg.prompt && arg.prompt.infinite) result += '...';
 			if (arg.flag) result += arg.flag.join('|');
 			else result += arg.id;
-			result += args.optional || arg.flag ? ']' : '>';
+			result += (arg.prompt && arg.prompt.optional) || arg.flag ? ']' : '>';
 			return result;
 		}).join(' ');
 	}

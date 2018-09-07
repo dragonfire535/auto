@@ -1,7 +1,8 @@
-const { IA_TOKEN, IA_PREFIX, OWNERS, INVITE } = process.env;
+require('dotenv').config();
+const { AUTO_TOKEN, AUTO_PREFIX, OWNERS, INVITE } = process.env;
 const Client = require('./structures/Client');
 const client = new Client({
-	prefix: IA_PREFIX.split('||'),
+	prefix: AUTO_PREFIX.split('||'),
 	ownerID: OWNERS.split(','),
 	disableEveryone: true,
 	disabledEvents: ['TYPING_START']
@@ -37,7 +38,7 @@ client.commandHandler.on('error', (err, msg) => {
 	`).catch(() => null);
 });
 
-client.login(IA_TOKEN);
+client.login(AUTO_TOKEN);
 
 process.on('unhandledRejection', err => {
 	console.error('[FATAL] Unhandled Promise Rejection.', err);

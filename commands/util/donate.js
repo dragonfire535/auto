@@ -12,7 +12,7 @@ module.exports = class DonateCommand extends Command {
 
 	exec(msg) {
 		return msg.util.send(stripIndents`
-			Contribute to IA development!
+			Contribute to development!
 			<https://www.patreon.com/dragonfire535>
 			<https://paypal.me/dragonfire535>
 		`);

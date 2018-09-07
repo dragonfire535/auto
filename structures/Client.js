@@ -18,18 +18,19 @@ class Client extends AkairoClient {
 			fetchMembers: true,
 			defaultCooldown: 1000,
 			defaultPrompt: {
-				modifyStart: text => stripIndents`
-					${text}
+				modifyStart: (text, msg) => stripIndents`
+					${msg.author}, ${text}
 					Respond with \`cancel\` to cancel the command. The command will automatically be cancelled in 30 seconds.
 				`,
-				modifyRetry: text => stripIndents`
-					${text}
+				modifyRetry: (text, msg) => stripIndents`
+					${msg.author}, ${text}
 					Respond with \`cancel\` to cancel the command. The command will automatically be cancelled in 30 seconds.
 				`,
-				timeout: 'Cancelled command due to timeout.',
-				ended: '2 tries and you still don\'t understand. Perhaps view this command\'s help information?',
-				cancel: 'Cancelled command.',
-				retries: 2
+				timeout: msg => `${msg.author}, cancelled command.`,
+				ended: msg => `${msg.author}, 2 tries and you still don't understand, cancelled command.`,
+				cancel: msg => `${msg.author}, cancelled command.`,
+				retries: 2,
+				stopWord: 'finish'
 			}
 		});
 	}
