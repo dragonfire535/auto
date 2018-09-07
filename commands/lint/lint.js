@@ -30,7 +30,7 @@ module.exports = class LintCommand extends Command {
 				{
 					id: 'amber',
 					match: 'flag',
-					flags: ['--amber', '-a']
+					flag: ['--amber', '-a']
 				}
 			]
 		});
