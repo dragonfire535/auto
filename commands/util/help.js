@@ -47,11 +47,11 @@ module.exports = class HelpCommand extends Command {
 		}
 		return msg.util.send(stripIndents`
 			__Command **${command.id}**__${command.channel === 'guild' ? ' (Usable only in servers)' : ''}
-			${command.description}${command.ownerOnly ? '\n⚠ Only the bot owner may use this command. ⚠' : ''}
+			${command.description}${command.ownerOnly ? '\nOnly the bot owner(s) may use this command.' : ''}
 
-			**Format**: \`${command.id}${command.args.args.length ? ` ${this.makeArgList(command.args.args)}` : ''}\`
-			**Aliases**: ${command.aliases.join(', ')}
-			**Group**: ${this.parseCategoryName(command.categoryID)}
+			**Format:** \`${command.id}${command.args.args.length ? ` ${this.makeArgList(command.args.args)}` : ''}\`
+			**Aliases:** ${command.aliases.join(', ')}
+			**Group:** ${this.parseCategoryName(command.categoryID)}
 		`);
 	}
 

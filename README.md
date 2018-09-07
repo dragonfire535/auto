@@ -14,24 +14,24 @@ function is to scan JS and JSON codeblocks for syntax errors.
 ## Commands (12)
 ### Lint:
 
-* **lint-json**: Lints JSON.
-* **lint-rule**: Gets information on an eslint rule.
-* **lint**: Lints code.
+* **lint-json:** Lints JSON.
+* **lint-rule:** Gets information on an eslint rule.
+* **lint:** Lints code.
 
 ### Other:
 
-* **beautify**: Beautifies code with js-beautify.
-* **hi**: Hello.
+* **beautify:** Beautifies code with js-beautify.
+* **hi:** Hello.
 
 ### Util:
 
-* **changelog**: Responds with the bot's latest 10 commits.
-* **donate**: Responds with the bot's donation links.
-* **eval**: Executes JavaScript code.
-* **help**: Displays a list of available commands, or detailed information for a specific command.
-* **info**: Responds with detailed bot information.
-* **invite**: Responds with the bot's invite links.
-* **ping**: Checks the bot's ping to the Discord server.
+* **changelog:** Responds with the bot's latest 10 commits.
+* **donate:** Responds with the bot's donation links.
+* **eval:** Executes JavaScript code.
+* **help:** Displays a list of available commands, or detailed information for a specific command.
+* **info:** Responds with detailed bot information.
+* **invite:** Responds with the bot's invite links.
+* **ping:** Checks the bot's ping to the Discord server.
 
 ## Licensing
 The bot is licensed under the GPL 3.0 license. See the file `LICENSE` for more
