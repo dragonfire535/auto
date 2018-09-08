@@ -29,7 +29,7 @@ module.exports = class LintRuleCommand extends Command {
 		if (!rules.has(rule)) return msg.util.send('Could not find any results.');
 		const data = rules.get(rule).meta;
 		const embed = new MessageEmbed()
-			.setAuthor('ESLint', 'https://i.imgur.com/TlurpFC.png', 'https://eslint.org/')
+			.setAuthor('ESLint', 'https://i.imgur.com/04GhEhU.png', 'https://eslint.org/')
 			.setColor(0x3A33D1)
 			.setTitle(`${rule} (${data.docs.category})`)
 			.setURL(`https://eslint.org/docs/rules/${rule}`)

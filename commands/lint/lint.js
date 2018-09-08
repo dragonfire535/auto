@@ -37,15 +37,26 @@ module.exports = class LintCommand extends Command {
 	}
 
 	exec(msg, { code, amber }) {
-		if (code.lang && !['js', 'javascript'].includes(code.lang)) {
-			return msg.util.reply('Only `js` or `javascript` codeblocks should be linted with this command.');
+		if (!code.lang || ['js', 'javascript'].includes(code.lang)) {
+			const errors = linter.verify(code.code, amber ? amberConfig : defautConfig);
+			if (!errors.length) return msg.util.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
+			const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
+			return msg.util.reply(stripIndents`
+				${badMessages[Math.floor(Math.random() * badMessages.length)]}
+				${errorMap.join('\n')}
+			`);
+		} else if (code.lang === 'json') {
+			try {
+				JSON.parse(code.code);
+				return msg.util.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
+			} catch (err) {
+				return msg.util.reply(stripIndents`
+					${badMessages[Math.floor(Math.random() * badMessages.length)]}
+					\`${err.name}: ${err.message}\`
+				`);
+			}
+		} else {
+			return msg.util.reply('I don\'t know how to lint that language.');
 		}
-		const errors = linter.verify(code.code, amber ? amberConfig : defautConfig);
-		if (!errors.length) return msg.util.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
-		const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
-		return msg.util.reply(stripIndents`
-			${badMessages[Math.floor(Math.random() * badMessages.length)]}
-			${errorMap.join('\n')}
-		`);
 	}
 };
