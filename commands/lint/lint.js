@@ -47,7 +47,7 @@ module.exports = class LintCommand extends Command {
 		if (!code.lang || ['js', 'javascript'].includes(code.lang)) {
 			const errors = linter.verify(code.code, amber ? amberConfig : defautConfig);
 			if (!errors.length) {
-				if (reaction) await this.reactSuccess(msg);
+				if (reaction) return this.reactSuccess(msg);
 				return msg.util.reply(goodMessages[Math.floor(Math.random() * goodMessages.length)]);
 			}
 			const errorMap = trimArray(errors.map(err => `\`[${err.line}:${err.column}] ${err.message}\``));
