@@ -9,8 +9,26 @@ const client = new Client({
 });
 const activities = require('./assets/json/activity');
 const { stripIndents } = require('common-tags');
+const codeblock = /```(?:(\S+)\n)?\s*([^]+?)\s*```/i;
+const runLint = msg => {
+	if (msg.channel.type !== 'text' || msg.author.bot) return null;
+	if (!codeblock.test(msg.content)) return null;
+	if (!msg.channel.permissionsFor(msg.client.user).has(['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'])) return null;
+	const parsed = codeblock.exec(msg.content);
+	const code = {
+		code: parsed[2],
+		lang: parsed[1] ? parsed[1].toLowerCase() : null
+	};
+	return client.commandHandler.modules.get('lint').exec(msg, { code, amber: false }, true);
+};
 
 client.setup();
+
+client.on('message', msg => runLint(msg));
+
+client.on('messageUpdate', (oldMsg, msg) => runLint(msg));
+
+client.on('unknownCommand', msg => msg.reply('Invalid message!'));
 
 client.on('ready', () => {
 	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);

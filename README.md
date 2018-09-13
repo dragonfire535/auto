@@ -9,7 +9,7 @@
 Auto is a Discord bot coded in JavaScript with
 [discord.js](https://discord.js.org/) using the
 [Akairo](https://github.com/1Computer1/discord-akairo) command framework. Its primary
-function is to scan JS and JSON codeblocks for syntax errors.
+function is to automatically scan JS and JSON codeblocks for syntax errors.
 
 ## Commands (11)
 ### Lint:
