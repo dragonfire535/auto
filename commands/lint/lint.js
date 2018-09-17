@@ -80,12 +80,12 @@ module.exports = class LintCommand extends Command {
 	}
 
 	async resetReactions(msg) {
-		const failReaction = msg.reactions.get(FAILURE_EMOJI_ID);
+		const failReaction = msg.reactions.get(FAILURE_EMOJI_ID || '❌');
 		if (failReaction && !failReaction.users.size) await failReaction.users.fetch();
 		if (failReaction && failReaction.users.has(this.client.user.id)) {
 			await failReaction.users.remove(this.client.user);
 		}
-		const successReaction = msg.reactions.get(SUCCESS_EMOJI_ID);
+		const successReaction = msg.reactions.get(SUCCESS_EMOJI_ID || '✅');
 		if (successReaction && !successReaction.users.size) await successReaction.users.fetch();
 		if (successReaction && successReaction.users.has(this.client.user.id)) {
 			await successReaction.users.remove(this.client.user);
@@ -94,7 +94,7 @@ module.exports = class LintCommand extends Command {
 
 	async reactSuccess(msg) {
 		try {
-			await msg.react(SUCCESS_EMOJI_ID);
+			await msg.react(SUCCESS_EMOJI_ID || '✅');
 			return null;
 		} catch (err) {
 			return null;
@@ -103,8 +103,11 @@ module.exports = class LintCommand extends Command {
 
 	async reactFailure(msg) {
 		try {
-			await msg.react(FAILURE_EMOJI_ID);
-			const filter = (reaction, user) => user.id === msg.author.id && reaction.emoji.id === FAILURE_EMOJI_ID;
+			await msg.react(FAILURE_EMOJI_ID || '❌');
+			const filter = (reaction, user) => {
+				if (user.id !== msg.author.id) return false;
+				return FAILURE_EMOJI_ID ? reaction.emoji.id === FAILURE_EMOJI_ID : reaction.emoji.name === '❌';
+			};
 			const reactions = await msg.awaitReactions(filter, {
 				max: 1,
 				time: 30000
