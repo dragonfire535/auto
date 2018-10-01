@@ -41,7 +41,7 @@
 		"js-beautify": "^1.8.6",
 		"moment": "^2.22.2",
 		"moment-duration-format": "^2.2.2",
-		"node-superfetch": "^0.1.7",
+		"node-superfetch": "^0.1.9",
 		"zlib-sync": "^0.1.4"
 	},
 	"devDependencies": {
