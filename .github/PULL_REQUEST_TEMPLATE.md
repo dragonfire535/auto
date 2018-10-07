@@ -2,7 +2,7 @@
 
 
 **Semantic versioning classification:**  
-- This PR changes the bot's code in some way
+- This PR changes the code in some way
   - [ ] SEMVER patch (bug fix)
   - [ ] SEMVER minor (commands or args added)
   - [ ] SEMVER major (commands removed or renamed, args moved or removed)
