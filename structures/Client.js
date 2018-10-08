@@ -1,5 +1,6 @@
 const { AkairoClient, CommandHandler } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
+const winston = require('winston');
 const path = require('path');
 const CodeType = require('../types/code');
 
@@ -32,6 +33,13 @@ class Client extends AkairoClient {
 				retries: 2,
 				stopWord: 'finish'
 			}
+		});
+		this.logger = winston.createLogger({
+			transports: [new winston.transports.Console()],
+			format: winston.format.combine(
+				winston.format.timestamp({ format: 'MM/DD/YYYY HH:mm:ss' }),
+				winston.format.printf(log => `[${log.timestamp}] [${log.level.toUpperCase()}]: ${log.message}`)
+			)
 		});
 	}
 

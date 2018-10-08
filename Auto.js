@@ -29,7 +29,7 @@ client.on('message', msg => runLint(msg));
 client.on('messageUpdate', (oldMsg, msg) => runLint(msg));
 
 client.on('ready', () => {
-	console.log(`[READY] Logged in as ${client.user.tag}! (${client.user.id})`);
+	client.logger.info(`[READY] Logged in as ${client.user.tag}! ID: ${client.user.id}`);
 	client.setInterval(() => {
 		const activity = activities[Math.floor(Math.random() * activities.length)];
 		client.user.setActivity(activity.text, { type: activity.type });
@@ -37,16 +37,16 @@ client.on('ready', () => {
 });
 
 client.on('disconnect', event => {
-	console.error(`[DISCONNECT] Disconnected with code ${event.code}.`);
+	client.logger.error(`[DISCONNECT] Disconnected with code ${event.code}.`);
 	process.exit(0);
 });
 
-client.on('error', err => console.error('[ERROR]', err));
+client.on('error', err => client.logger.error(err));
 
-client.on('warn', err => console.warn('[WARNING]', err));
+client.on('warn', warn => client.logger.warn(warn));
 
-client.commandHandler.on('error', (err, msg) => {
-	console.error('[COMMAND ERROR]', err);
+client.commandHandler.on('error', (err, msg, command) => {
+	client.logger.error(`[COMMAND${command ? `:${command.name}` : ''}]\n${err.stack}`);
 	msg.reply(stripIndents`
 		An error occurred while running the command: \`${err.message}\`
 		You shouldn't ever receive an error like this.
@@ -55,8 +55,3 @@ client.commandHandler.on('error', (err, msg) => {
 });
 
 client.login(AUTO_TOKEN);
-
-process.on('unhandledRejection', err => {
-	console.error('[FATAL] Unhandled Promise Rejection.', err);
-	process.exit(1);
-});
