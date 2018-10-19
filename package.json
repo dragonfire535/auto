@@ -38,7 +38,7 @@
 		"erlpack": "github:discordapp/erlpack",
 		"eslint": "^5.7.0",
 		"eslint-config-amber": "^2.0.0",
-		"js-beautify": "^1.8.7",
+		"js-beautify": "^1.8.8",
 		"moment": "^2.22.2",
 		"moment-duration-format": "^2.2.2",
 		"node-superfetch": "^0.1.9",
