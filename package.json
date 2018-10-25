@@ -30,7 +30,6 @@
 		"node": ">=10"
 	},
 	"dependencies": {
-		"@discordjs/uws": "^11.149.0",
 		"common-tags": "^1.8.0",
 		"discord-akairo": "github:1Computer1/discord-akairo",
 		"discord.js": "github:discordjs/discord.js",
